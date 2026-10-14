@@ -1,0 +1,178 @@
+/*
+ * Aurora Lily58 - Børge's dev keymap
+ *
+ * OS keyboard layout on every host: Norwegian (Bokmål).
+ * Symbols are emitted through the NB_ key codes from zmk-locales, so the
+ * firmware sends the Norwegian scancode (incl. AltGr combos) for each symbol.
+ *
+ * Layers: 0 BASE  1 NAV  2 SYM  3 FN  4 MAC
+ *
+ * Visual map: docs/keymap.html
+ */
+
+#include <behaviors.dtsi>
+#include <dt-bindings/zmk/keys.h>
+#include <dt-bindings/zmk/bt.h>
+#include <dt-bindings/zmk/outputs.h>
+#include <dt-bindings/zmk/rgb.h>
+#include <locale/keys_nb.h>
+
+#define BASE 0
+#define NAV  1
+#define SYM  2
+#define FN   3
+#define MAC  4
+
+/ {
+    macros {
+        /* Dead keys on the Norwegian layout: send the key, then a space, so the plain symbol comes out. */
+        no_tilde: no_tilde {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            wait-ms = <10>;
+            tap-ms = <10>;
+            bindings = <&kp NB_TILDE>, <&kp SPACE>;
+        };
+        no_caret: no_caret {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            wait-ms = <10>;
+            tap-ms = <10>;
+            bindings = <&kp NB_CARET>, <&kp SPACE>;
+        };
+        no_grave: no_grave {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            wait-ms = <10>;
+            tap-ms = <10>;
+            bindings = <&kp NB_GRAVE>, <&kp SPACE>;
+        };
+
+        /* Host switch: select the Bluetooth profile and set the underglow to that host's colour. */
+        bt0: bt0 {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&bt BT_SEL 0>, <&rgb_ug RGB_COLOR_HSB(0,100,20)>;     /* red */
+        };
+        bt1: bt1 {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&bt BT_SEL 1>, <&rgb_ug RGB_COLOR_HSB(120,100,20)>;   /* green */
+        };
+        bt2: bt2 {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&bt BT_SEL 2>, <&rgb_ug RGB_COLOR_HSB(240,100,20)>;   /* blue */
+        };
+        bt3: bt3 {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&bt BT_SEL 3>, <&rgb_ug RGB_COLOR_HSB(60,100,20)>;    /* yellow */
+        };
+        bt4: bt4 {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&bt BT_SEL 4>, <&rgb_ug RGB_COLOR_HSB(280,100,20)>;   /* purple */
+        };
+    };
+
+    combos {
+        compatible = "zmk,combos";
+        /* Both shifts together: Caps Word, for ENV_VARS and CONSTANTS. */
+        combo_caps_word {
+            timeout-ms = <50>;
+            key-positions = <24 49>;
+            bindings = <&caps_word>;
+        };
+    };
+
+    keymap {
+        compatible = "zmk,keymap";
+
+        base_layer {
+            display-name = "BASE";
+// ------------------------------------------------------------------------------------------------------------
+// |  ESC  |  1  |  2  |  3   |  4   |  5   |                   |  6   |  7    |  8    |  9   |   0   | BSPC  |
+// |  TAB  |  Q  |  W  |  E   |  R   |  T   |                   |  Y   |  U    |  I    |  O   |   P   |  DEL  |
+// | SHIFT |  A  |  S  |  D   |  F   |  G   |                   |  H   |  J    |  K    |  L   |   ;   |   '   |
+// | CTRL  |  Z  |  X  |  C   |  V   |  B   |   =    |  |   -   |  N   |  M    |  ,    |  .   |   /   | SHIFT |
+//                     | GUI  | ALT  | NAV  |  SPACE |  | ENTER | SYM  | BSPC  |  FN   |
+            bindings = <
+&kp ESC   &kp NB_N1 &kp NB_N2 &kp NB_N3 &kp NB_N4 &kp NB_N5                               &kp NB_N6 &kp NB_N7 &kp NB_N8    &kp NB_N9  &kp NB_N0   &kp BSPC
+&kp TAB   &kp NB_Q  &kp NB_W  &kp NB_E  &kp NB_R  &kp NB_T                                &kp NB_Y  &kp NB_U  &kp NB_I     &kp NB_O   &kp NB_P    &kp DEL
+&kp LSHFT &kp NB_A  &kp NB_S  &kp NB_D  &kp NB_F  &kp NB_G                                &kp NB_H  &kp NB_J  &kp NB_K     &kp NB_L   &kp NB_SEMI &kp NB_SQT
+&kp LCTRL &kp NB_Z  &kp NB_X  &kp NB_C  &kp NB_V  &kp NB_B  &kp NB_EQUAL     &kp NB_MINUS &kp NB_N  &kp NB_M  &kp NB_COMMA &kp NB_DOT &kp NB_FSLH &kp RSHFT
+                              &kp LGUI  &kp LALT  &mo NAV   &kp SPACE        &kp RET      &mo SYM   &kp BSPC  &mo FN
+            >;
+        };
+
+        nav_layer {
+            display-name = "NAV";
+// ------------------------------------------------------------------------------------------------------------
+// |       |     |     |      |      |      |                   |      |       |       |      |       | PRTSC |
+// |       |MUTE |VOL- | VOL+ | PLAY |      |                   | HOME | PGDN  | PGUP  | END  |  INS  |       |
+// |       | GUI | ALT | CTRL | SHFT |      |                   |  <-  |   v   |   ^   |  ->  |  DEL  |       |
+// |       |CAPSW|     |      |      |      |        |  |       |C+<-  | C+BSP | C+DEL | C+-> |       |       |
+//                     |      |      | HELD |        |  |       |      |       |       |
+            bindings = <
+&trans &trans         &trans       &trans       &trans    &trans                       &trans       &trans       &trans      &trans        &trans  &kp PSCRN
+&trans &kp C_MUTE     &kp C_VOL_DN &kp C_VOL_UP &kp C_PP  &trans                       &kp HOME     &kp PG_DN    &kp PG_UP   &kp END       &kp INS &trans
+&trans &kp LGUI       &kp LALT     &kp LCTRL    &kp LSHFT &trans                       &kp LEFT     &kp DOWN     &kp UP      &kp RIGHT     &kp DEL &trans
+&trans &caps_word     &trans       &trans       &trans    &trans  &trans      &trans   &kp LC(LEFT) &kp LC(BSPC) &kp LC(DEL) &kp LC(RIGHT) &trans  &trans
+                                   &trans       &trans    &trans  &trans      &trans   &trans       &trans       &trans
+            >;
+        };
+
+        sym_layer {
+            display-name = "SYM";
+// ------------------------------------------------------------------------------------------------------------
+// |       |     |     |      |      |      |                   |      |       |       |      |       |       |
+// |       |  ~  |  <  |  >   |  $   |  %   |                   |  ^   |   @   |   #   |  !   |   ?   |   Å   |
+// |       |  |  |  (  |  )   |  {   |  }   |                   |  =   |   "   |   +   |  :   |   Ø   |   Æ   |
+// |       |  \  |  [  |  ]   |  &   |  *   |        |  |       |  _   |   `   |   €   |      |       |       |
+//                     |      |      |      |        |  |       | HELD |       |       |
+            bindings = <
+&trans &trans      &trans      &trans      &trans      &trans                           &trans       &trans     &trans      &trans       &trans         &trans
+&trans &no_tilde   &kp NB_LT   &kp NB_GT   &kp NB_DLLR &kp NB_PRCNT                     &no_caret    &kp NB_AT  &kp NB_HASH &kp NB_EXCL  &kp NB_QMARK   &kp NB_A_RING
+&trans &kp NB_PIPE &kp NB_LPAR &kp NB_RPAR &kp NB_LBRC &kp NB_RBRC                      &kp NB_EQUAL &kp NB_DQT &kp NB_PLUS &kp NB_COLON &kp NB_O_SLASH &kp NB_AE
+&trans &kp NB_BSLH &kp NB_LBKT &kp NB_RBKT &kp NB_AMPS &kp NB_ASTRK &trans     &trans   &kp NB_UNDER &no_grave  &kp NB_EURO &trans       &trans         &trans
+                               &trans      &trans      &trans       &trans     &trans   &trans       &trans     &trans
+            >;
+        };
+
+        fn_layer {
+            display-name = "FN";
+// ------------------------------------------------------------------------------------------------------------
+// |       | BT1 | BT2 | BT3  | BT4  | BT5  |                   |BTCLR |USB/BT | LED   | LED- | LED+  |  MAC  |
+// |       | F1  | F2  | F3   | F4   | F5   |                   |  /   |   7   |   8   |  9   |   -   | BSPC  |
+// |       | F6  | F7  | F8   | F9   | F10  |                   |  *   |   4   |   5   |  6   |   +   | ENTER |
+// |       | F11 | F12 |      |      |      |        |  |       |  0   |   1   |   2   |  3   |   .   |   =   |
+//                     |      |      |      |        |  |       |      |       |       | HELD |
+            bindings = <
+&trans &bt0    &bt1    &bt2   &bt3   &bt4                         &bt BT_CLR      &out OUT_TOG &rgb_ug RGB_TOG &rgb_ug RGB_BRD &rgb_ug RGB_BRI &tog MAC
+&trans &kp F1  &kp F2  &kp F3 &kp F4 &kp F5                       &kp KP_SLASH    &kp KP_N7    &kp KP_N8       &kp KP_N9       &kp KP_MINUS    &kp BSPC
+&trans &kp F6  &kp F7  &kp F8 &kp F9 &kp F10                      &kp KP_MULTIPLY &kp KP_N4    &kp KP_N5       &kp KP_N6       &kp KP_PLUS     &kp RET
+&trans &kp F11 &kp F12 &trans &trans &trans  &trans      &trans   &kp KP_N0       &kp KP_N1    &kp KP_N2       &kp KP_N3       &kp NB_DOT      &kp NB_EQUAL
+                       &trans &trans &trans  &trans      &trans   &trans          &trans       &trans
+            >;
+        };
+
+        mac_layer {
+            display-name = "MAC";
+            /*
+             * Toggle with FN + MAC. Swaps the pinky Ctrl and thumb GUI so the
+             * bottom-left key is Cmd on macOS.
+             * TODO: the Norwegian macOS layout uses different Option combos for
+             * @ $ { } [ ] | \ than Windows/Linux; add a mac SYM layer when the
+             * Mac profile is actually in use.
+             */
+            bindings = <
+&trans   &trans &trans &trans   &trans &trans                        &trans &trans &trans &trans &trans &trans
+&trans   &trans &trans &trans   &trans &trans                        &trans &trans &trans &trans &trans &trans
+&trans   &trans &trans &trans   &trans &trans                        &trans &trans &trans &trans &trans &trans
+&kp LGUI &trans &trans &trans   &trans &trans &trans       &trans    &trans &trans &trans &trans &trans &trans
+                       &kp LCTRL &trans &trans &trans      &trans    &trans &trans &trans
+            >;
+        };
+    };
+};

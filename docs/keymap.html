@@ -1,0 +1,323 @@
+<title>Lily58 Dev Keymap</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+/* Layout: one column, keyboard halves side by side on wide screens and stacked on phones; layer tabs above, notes below. */
+:root{
+  --bg:#f3f4f2; --panel:#ffffff; --fg:#1d2320; --muted:#5d6a63; --line:#d6dbd7;
+  --accent:#187a73; --accent-ink:#ffffff;
+  --k-alpha:#ffffff; --k-alpha-ink:#1d2320;
+  --k-sym:#dbeeec; --k-sym-ink:#0f4b46;
+  --k-nav:#e2e6f7; --k-nav-ink:#2a3a8a;
+  --k-mod:#e8e8e6; --k-mod-ink:#3d4542;
+  --k-layer:#187a73; --k-layer-ink:#ffffff;
+  --k-bt:#f6e2c9; --k-bt-ink:#7a4a0d;
+  --k-num:#fff2cc; --k-num-ink:#5a4400;
+  --k-fn:#ece4f5; --k-fn-ink:#4b2c7a;
+  --k-media:#e4efe0; --k-media-ink:#2f5a26;
+  --k-stroke:#b9c1bc;
+  --mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+  --sans:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
+  --bg:#15191a; --panel:#1d2325; --fg:#e6ebe8; --muted:#9aa6a0; --line:#2e3739;
+  --accent:#4fc2b8; --accent-ink:#0b1a18;
+  --k-alpha:#262e30; --k-alpha-ink:#e6ebe8;
+  --k-sym:#17403d; --k-sym-ink:#a9e6df;
+  --k-nav:#232c57; --k-nav-ink:#b9c4ff;
+  --k-mod:#2d3436; --k-mod-ink:#c2cbc6;
+  --k-layer:#4fc2b8; --k-layer-ink:#0b1a18;
+  --k-bt:#4a3414; --k-bt-ink:#f3cf9a;
+  --k-num:#4a3f10; --k-num-ink:#f3e3a0;
+  --k-fn:#372a4d; --k-fn-ink:#d6c3f2;
+  --k-media:#283d22; --k-media-ink:#bfe3b3;
+  --k-stroke:#3a4446; color-scheme:dark } }
+:root[data-theme="dark"]{
+  --bg:#15191a; --panel:#1d2325; --fg:#e6ebe8; --muted:#9aa6a0; --line:#2e3739;
+  --accent:#4fc2b8; --accent-ink:#0b1a18;
+  --k-alpha:#262e30; --k-alpha-ink:#e6ebe8;
+  --k-sym:#17403d; --k-sym-ink:#a9e6df;
+  --k-nav:#232c57; --k-nav-ink:#b9c4ff;
+  --k-mod:#2d3436; --k-mod-ink:#c2cbc6;
+  --k-layer:#4fc2b8; --k-layer-ink:#0b1a18;
+  --k-bt:#4a3414; --k-bt-ink:#f3cf9a;
+  --k-num:#4a3f10; --k-num-ink:#f3e3a0;
+  --k-fn:#372a4d; --k-fn-ink:#d6c3f2;
+  --k-media:#283d22; --k-media-ink:#bfe3b3;
+  --k-stroke:#3a4446; color-scheme:dark }
+
+body{background:var(--bg);color:var(--fg);font-family:var(--sans);font-size:15px;line-height:1.5;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:20px 48px}
+.wrap{max-width:980px;margin:0 auto;display:flex;flex-direction:column;gap:22px}
+header h1{font-size:1.6rem;margin:0 0 4px;letter-spacing:-.01em;text-wrap:balance}
+header p{margin:0;color:var(--muted);max-width:62ch}
+.spec{display:flex;flex-wrap:wrap;gap:8px 18px;margin-top:10px;font-family:var(--mono);font-size:.78rem;color:var(--muted)}
+.spec b{color:var(--fg);font-weight:600}
+
+.tabs{display:flex;gap:6px;flex-wrap:wrap}
+.tab{font:600 .85rem var(--mono);padding:8px 14px;border:1px solid var(--line);background:var(--panel);color:var(--fg);border-radius:8px;cursor:pointer}
+.tab[aria-selected="true"]{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.tab:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.hint{font-size:.85rem;color:var(--muted);margin:0}
+
+.board{display:flex;flex-wrap:wrap;gap:14px;justify-content:center;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:14px}
+.half{flex:1 1 300px;max-width:470px;min-width:0}
+.half svg{width:100%;height:auto;display:block}
+.k{stroke:var(--k-stroke);stroke-width:1}
+.k-alpha{fill:var(--k-alpha)} .k-sym{fill:var(--k-sym)} .k-nav{fill:var(--k-nav)} .k-mod{fill:var(--k-mod)}
+.k-layer{fill:var(--k-layer)} .k-bt{fill:var(--k-bt)} .k-num{fill:var(--k-num)} .k-fn{fill:var(--k-fn)} .k-media{fill:var(--k-media)}
+.t{font-family:var(--mono);font-weight:600;text-anchor:middle;dominant-baseline:central}
+.t-alpha{fill:var(--k-alpha-ink)} .t-sym{fill:var(--k-sym-ink)} .t-nav{fill:var(--k-nav-ink)} .t-mod{fill:var(--k-mod-ink)}
+.t-layer{fill:var(--k-layer-ink)} .t-bt{fill:var(--k-bt-ink)} .t-num{fill:var(--k-num-ink)} .t-fn{fill:var(--k-fn-ink)} .t-media{fill:var(--k-media-ink)}
+.sub{font-weight:400;opacity:.7;text-anchor:end}
+.hold{font-weight:400;opacity:.85}
+.ghost{opacity:.32}
+.held{stroke:var(--accent);stroke-width:2.5}
+
+.notes{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px 16px;min-width:0}
+.card h3{margin:0 0 6px;font-size:.95rem}
+.card p,.card li{margin:0;font-size:.9rem}
+.card ul{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:4px}
+code{font-family:var(--mono);font-size:.84em;background:var(--k-mod);padding:1px 5px;border-radius:4px}
+.legend{display:flex;flex-wrap:wrap;gap:8px 14px;font-size:.8rem;color:var(--muted)}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.legend i{width:14px;height:14px;border-radius:3px;border:1px solid var(--k-stroke);display:inline-block}
+h2{font-size:1.15rem;margin:8px 0 0}
+table{border-collapse:collapse;width:100%;font-size:.88rem}
+th,td{text-align:left;padding:7px 8px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-weight:600;font-size:.78rem;letter-spacing:.04em;text-transform:uppercase;color:var(--muted)}
+.tablewrap{overflow-x:auto}
+.win{font-weight:600;color:var(--accent)}
+@media (prefers-reduced-motion:no-preference){.tab{transition:background .15s}}
+</style>
+
+<div class="wrap">
+<header>
+  <h1>Lily58 Dev Keymap</h1>
+  <p>Four layers for shell-heavy work on an Aurora Lily58 running ZMK. Plain QWERTY on BASE, æøå on a layer, underglow colour per Bluetooth host. The OS stays on the Norwegian layout; the firmware emits the right scancodes so every symbol sits where the map says.</p>
+  <div class="spec"><span><b>Board</b> Aurora Lily58, nice!nano v2</span><span><b>Firmware</b> ZMK + zmk-locales <code>keys_no.h</code></span><span><b>OS layout</b> Norwegian (all hosts)</span><span><b>Layers</b> BASE · NAV · SYM · FN</span></div>
+</header>
+
+<div role="tablist" class="tabs" id="tabs"></div>
+<p class="hint" id="hint"></p>
+
+<div class="board" id="board">
+  <div class="half" id="left"></div>
+  <div class="half" id="right"></div>
+</div>
+
+<div class="legend">
+  <span><i style="background:var(--k-alpha)"></i>letters, digits</span>
+  <span><i style="background:var(--k-sym)"></i>symbol</span>
+  <span><i style="background:var(--k-nav)"></i>navigation</span>
+  <span><i style="background:var(--k-num)"></i>numpad</span>
+  <span><i style="background:var(--k-fn)"></i>F-keys</span>
+  <span><i style="background:var(--k-mod)"></i>modifier</span>
+  <span><i style="background:var(--k-layer)"></i>layer (hold)</span>
+  <span><i style="background:var(--k-bt)"></i>bluetooth / host</span>
+  <span><i style="background:var(--k-media)"></i>media</span>
+  <span><i style="background:var(--k-alpha);opacity:.35"></i>falls through to BASE</span>
+</div>
+
+<div class="notes" id="notes"></div>
+
+<h2>Decisions</h2>
+<div class="notes">
+  <div class="card">
+    <h3>Norwegian OS layout, not US</h3>
+    <div class="tablewrap"><table>
+      <tr><th>Need</th><th>US on every host</th><th>Norwegian on every host</th></tr>
+      <tr><td>Works on any PC without installing anything</td><td>No (æøå needs EurKEY / US-intl / compose per host)</td><td class="win">Yes, it is the default on Norwegian machines</td></tr>
+      <tr><td>Dead keys in the shell</td><td class="win">None</td><td><code>~</code> <code>`</code> <code>^</code> are dead; firmware sends key + space as a macro</td></tr>
+      <tr><td>æ ø å</td><td>Hacks differ per OS</td><td class="win">Plain keys</td></tr>
+      <tr><td>Brackets, <code>$</code>, <code>|</code>, <code>\</code></td><td class="win">Single scancodes</td><td>AltGr combos, hidden inside the locale header</td></tr>
+    </table></div>
+    <p style="margin-top:8px">Your constraint is "many hosts, switch a lot", so zero per-host setup wins. The dead-key cost is three macros you never notice.</p>
+  </div>
+  <div class="card">
+    <h3>Where the shell characters live</h3>
+    <ul>
+      <li><code>-</code> <code>=</code> <code>/</code> <code>.</code> <code>,</code> <code>;</code> <code>'</code> on BASE; Shift gives <code>_</code> <code>:</code> <code>*</code> for free on the Norwegian layout.</li>
+      <li>SYM, held by the right thumb: brackets as pairs under ring + middle finger on the left hand, one pair per row; <code>$</code> <code>|</code> <code>\</code> <code>~</code> <code>&amp;</code> <code>*</code> beside them.</li>
+      <li>Right hand on SYM: <code>=</code> <code>"</code> <code>+</code> <code>:</code> on the home row, <code>!</code> <code>?</code> <code>@</code> <code>#</code> <code>^</code> above, <code>_</code> <code>`</code> <code>€</code> below, Æ Ø Å at their Norwegian spots.</li>
+      <li>PowerShell: <code>$</code> is left ring on the home row of SYM, <code>|</code> under the left pinky home, <code>\</code> under the left pinky one row down.</li>
+    </ul>
+  </div>
+  <div class="card">
+    <h3>Arrows</h3>
+    <p>HJKL on NAV, held by the left thumb. Home / PgDn / PgUp / End on the row above, word-jump and word-delete on the row below. Left hand gets Shift / Ctrl / Alt / GUI on its home row while NAV is held, so selection and word jumps are one-handed per side.</p>
+  </div>
+  <div class="card">
+    <h3>Switching between PCs</h3>
+    <p>Hold FN (right outer thumb) and press <code>1</code> to <code>5</code> on the left number row. Each key is a ZMK macro: <code>&amp;bt BT_SEL n</code> followed by <code>&amp;rgb_ug RGB_COLOR_HSB(hue,100,20)</code>, so the underglow colour tells you which host you are on before you type. The nice!view shows the profile number as well.</p>
+    <p style="margin-top:6px">Pair one profile per host (Debian test laptops, corporate Windows, Mac). Keep profile 5 for the odd one. ZMK has no built-in profile-to-colour link; the macro is the way to get it, and it survives reboots because RGB state is saved to flash.</p>
+  </div>
+  <div class="card">
+    <h3>macOS</h3>
+    <p>The Norwegian Mac layout puts brackets and <code>@</code> on different Option combos, and swaps Cmd for Ctrl. The <code>MAC</code> key on FN toggles a variant of BASE and SYM for that host. Not drawn here; build it when the Mac profile goes in.</p>
+  </div>
+  <div class="card">
+    <h3>Optional: home-row mods</h3>
+    <p>Not in this map. Ctrl and Shift stay physical on the left pinky column, which matters for Ctrl+C / Ctrl+R / Ctrl+L. If you later want fewer pinky reaches, add Miryoku-style home-row mods on BASE and keep this NAV/SYM/FN structure unchanged.</p>
+  </div>
+  <div class="card">
+    <h3>From the Iris</h3>
+    <p>Same alpha block, one more thumb key per side. Your old three layers map onto NAV and SYM plus FN; the extra thumb key is what makes FN a dedicated hold instead of a double-thumb chord. Both shifts held together is Caps Word for <code>ENV_VARS</code>.</p>
+  </div>
+</div>
+</div>
+
+<script>
+(function(){
+const U=60, PAD=4, W=7.4*U, H=5.9*U;
+const stag=[0.5,0.5,0.125,0,0.125,0.25];
+// Left half geometry: cols 0..5 (outer to inner), inner key, 4 thumb keys outer to inner.
+const leftKeys=[];
+for(let r=0;r<4;r++) for(let c=0;c<6;c++) leftKeys.push({id:'r'+r+'c'+c,x:c,y:r+stag[c],rot:0});
+leftKeys.push({id:'inner',x:6.0,y:2.75,rot:0});
+[[2.55,4.3,0],[3.6,4.3,0],[4.7,4.42,14],[5.78,4.75,28]].forEach((t,i)=>leftKeys.push({id:'t'+i,x:t[0],y:t[1],rot:t[2]}));
+const mirror=k=>({id:k.id,x:(W/U)-k.x-1,y:k.y,rot:-k.rot});
+const rightKeys=leftKeys.map(mirror);
+
+// Key spec: [label, category, subLabel?, holdLabel?]; null = transparent (falls through to BASE)
+const A='alpha',S='sym',N='nav',M='mod',L='layer',B='bt',NUM='num',F='fn',MD='media';
+const base={
+ left:[
+  [['ESC',M],['1',A,'!'],['2',A,'"'],['3',A,'#'],['4',A,'¤'],['5',A,'%']],
+  [['TAB',M],['Q',A],['W',A],['E',A],['R',A],['T',A]],
+  [['SHIFT',M],['A',A],['S',A],['D',A],['F',A],['G',A]],
+  [['CTRL',M],['Z',A],['X',A],['C',A],['V',A],['B',A]] ],
+ innerL:['=',S],
+ thumbsL:[['GUI',M],['ALT',M],['NAV',L,'','hold'],['SPACE',M]],
+ right:[
+  [['6',A,'&'],['7',A,'/'],['8',A,'('],['9',A,')'],['0',A,'='],['BSPC',M]],
+  [['Y',A],['U',A],['I',A],['O',A],['P',A],['DEL',M]],
+  [['H',A],['J',A],['K',A],['L',A],[';',S],["'",S,'*']],
+  [['N',A],['M',A],[',',S],['.',S,':'],['/',S],['SHIFT',M]] ],
+ innerR:['-',S,'_'],
+ thumbsR:[['ENTER',M],['SYM',L,'','hold'],['BSPC',M],['FN',L,'','hold']]
+};
+const _=null;
+const nav={
+ left:[
+  [_,_,_,_,_,_],
+  [_,['MUTE',MD],['VOL−',MD],['VOL+',MD],['PLAY',MD],_],
+  [_,['GUI',M],['ALT',M],['CTRL',M],['SHIFT',M],_],
+  [_,['CAPS WORD',M],_,_,_,_] ],
+ innerL:_,
+ thumbsL:[_,_,['NAV',L,'','held'],_],
+ right:[
+  [_,_,_,_,_,['PRTSC',N]],
+  [['HOME',N],['PGDN',N],['PGUP',N],['END',N],['INS',N],_],
+  [['←',N],['↓',N],['↑',N],['→',N],['DEL',N],_],
+  [['⌃←',N,'','word'],['⌃⌫',N,'','word'],['⌃DEL',N,'','word'],['⌃→',N,'','word'],_,_] ],
+ innerR:_,
+ thumbsR:[_,_,_,_]
+};
+const sym={
+ left:[
+  [_,_,_,_,_,_],
+  [_,['~',S],['<',S],['>',S],['$',S],['%',S]],
+  [_,['|',S],['(',S],[')',S],['{',S],['}',S]],
+  [_,['\\',S],['[',S],[']',S],['&',S],['*',S]] ],
+ innerL:_,
+ thumbsL:[_,_,_,_],
+ right:[
+  [_,_,_,_,_,_],
+  [['^',S],['@',S],['#',S],['!',S],['?',S],['Å',A]],
+  [['=',S],['"',S],['+',S],[':',S],['Ø',A],['Æ',A]],
+  [['_',S],['`',S],['€',S],_,_,_] ],
+ innerR:_,
+ thumbsR:[_,['SYM',L,'','held'],_,_]
+};
+const fn={
+ left:[
+  [_,['BT 1',B,'red','host'],['BT 2',B,'grn','host'],['BT 3',B,'blue','host'],['BT 4',B,'yel','host'],['BT 5',B,'pur','host']],
+  [_,['F1',F],['F2',F],['F3',F],['F4',F],['F5',F]],
+  [_,['F6',F],['F7',F],['F8',F],['F9',F],['F10',F]],
+  [_,['F11',F],['F12',F],_,_,_] ],
+ innerL:_,
+ thumbsL:[_,_,_,_],
+ right:[
+  [['BT CLR',B],['USB/BT',B],['LED',B,'','on/off'],['LED −',B,'','dim'],['LED +',B,'','bright'],['MAC',B,'','toggle']],
+  [['/',NUM],['7',NUM],['8',NUM],['9',NUM],['-',NUM],['BSPC',M]],
+  [['*',NUM],['4',NUM],['5',NUM],['6',NUM],['+',NUM],['ENTER',M]],
+  [['0',NUM],['1',NUM],['2',NUM],['3',NUM],['.',NUM],['=',NUM]] ],
+ innerR:_,
+ thumbsR:[_,_,_,['FN',L,'','held']]
+};
+
+const layers=[
+ {name:'BASE',data:base,hint:'Always active. Plain QWERTY alphas and number row, ; and \' where QWERTY puts them. Shift on the Norwegian layout adds _ : * on the keys shown.',
+  notes:[['Thumbs','Left: GUI, Alt, NAV (hold), Space. Right: Enter, SYM (hold), Backspace, FN (hold only).'],
+         ['Pinky columns','Left: Esc, Tab, Shift, Ctrl. Right: Backspace, Delete, apostrophe, Shift. Backspace and Delete stack top-right; the thumb Backspace is a duplicate for speed.'],
+         ['Inner keys','= on the left index reach, - on the right. Both fall off a normal 58-key count, and they are the two most typed symbols that are not already on the main block.']]},
+ {name:'NAV',data:nav,hint:'Hold the left thumb. Right hand navigates, left hand holds modifiers so Shift+arrow and Ctrl+arrow are one hand each.',
+  notes:[['Arrows','H J K L = ← ↓ ↑ →, the vim order. Works in every app, not only vim.'],
+         ['Above and below','Home / PgDn / PgUp / End above the arrows, word-left / delete word / forward-delete word / word-right below.'],
+         ['Left hand','GUI Alt Ctrl Shift on A S D F while held; Caps Word on Z; media on the top row.']]},
+ {name:'SYM',data:sym,hint:'Hold the right thumb. Pairs line up under the same two fingers on every row: < >, ( ), [ ] on ring + middle, with { } to the right of ( ).',
+  notes:[['Left hand','Row by row: ~ < > $ %  /  | ( ) { }  /  \\ [ ] & *. Shell-critical ones sit on the home row.'],
+         ['Right hand','= " + : on the home row, ^ @ # ! ? above, _ ` € below.'],
+         ['Æ Ø Å','SYM + the key where they sit on a Norwegian keyboard: Å right of P, Ø right of L, Æ right of Ø. Muscle memory from any Norwegian laptop carries over.'],
+         ['Digits','Number row falls through, so SYM + 7 still types 7. Useful for $1, ${2}, [0].']]},
+ {name:'FN',data:fn,hint:'Hold the right outer thumb. Numpad under the right hand, F-keys under the left, Bluetooth hosts on the number row.',
+  notes:[['Hosts','FN + 1..5 is one macro each: select the Bluetooth profile and set the underglow to that profile\'s colour (red, green, blue, yellow, purple). BT CLR forgets the current profile, USB/BT switches output when cabled.'],
+         ['LEDs','LED toggles underglow, LED − / LED + change brightness. Underglow is the biggest battery cost on a nice!nano, so keep it dim or off between host switches.'],
+         ['Numpad','7 8 9 / 4 5 6 / 1 2 3 under U I O, J K L, M , . with 0 on N. Operators on the outer columns, Enter and = on the pinky column.'],
+         ['Mac','MAC toggles the macOS variant of BASE and SYM (Cmd/Ctrl swap, Option combos for brackets).']]}
+];
+
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+function keySVG(g,spec,ghost){
+  const x=g.x*U+PAD,y=g.y*U+PAD,s=U-2*PAD,cx=x+s/2,cy=y+s/2;
+  const [label,cat,sub,hold]=spec;
+  const len=label.length;
+  const fs=len<=2?22:len<=4?12.5:len<=6?10.5:8.5;
+  const held=hold==='held';
+  const tf=`transform="rotate(${g.rot} ${cx} ${cy})"`;
+  let out=`<g class="${ghost?'ghost':''}" ${tf}><rect class="k k-${cat} ${held?'held':''}" x="${x}" y="${y}" width="${s}" height="${s}" rx="7"/>`;
+  out+=`<text class="t t-${cat}" x="${cx}" y="${cy+(hold?-3:0)}" font-size="${fs}">${esc(label)}</text>`;
+  if(sub) out+=`<text class="t t-${cat} sub" x="${x+s-5}" y="${y+9}" font-size="10">${esc(sub)}</text>`;
+  if(hold) out+=`<text class="t t-${cat} hold" x="${cx}" y="${y+s-9}" font-size="8">${esc(hold)}</text>`;
+  return out+'</g>';
+}
+function flatten(d){
+  const o={};
+  // Left data is outer→inner, right data is inner→outer; geometry ids are mirrored (R c0 = outer), so flip the right side.
+  for(let r=0;r<4;r++) for(let c=0;c<6;c++){o['L'+'r'+r+'c'+c]=d.left[r][c]; o['R'+'r'+r+'c'+c]=d.right[r][5-c];}
+  o['Linner']=d.innerL; o['Rinner']=d.innerR;
+  for(let i=0;i<4;i++){o['Lt'+i]=d.thumbsL[i]; o['Rt'+i]=d.thumbsR[3-i];}
+  return o;
+}
+const baseFlat=flatten(base);
+function renderHalf(side,keys,flat){
+  let svg=`<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="${side==='L'?'Left':'Right'} half">`;
+  for(const g of keys){
+    const spec=flat[side+g.id];
+    svg+=spec?keySVG(g,spec,false):keySVG(g,baseFlat[side+g.id],true);
+  }
+  return svg+'</svg>';
+}
+const tabs=document.getElementById('tabs'), hint=document.getElementById('hint'), notes=document.getElementById('notes');
+let current=0;
+try{const s=localStorage.getItem('lily58-layer'); if(s!==null&&layers[+s]) current=+s;}catch(e){}
+if(/^#(base|nav|sym|fn)$/i.test(location.hash)){const i=layers.findIndex(l=>l.name.toLowerCase()===location.hash.slice(1).toLowerCase()); if(i>=0) current=i;}
+function show(i){
+  current=i;
+  const L=layers[i], flat=flatten(L.data);
+  document.getElementById('left').innerHTML=renderHalf('L',leftKeys,flat);
+  document.getElementById('right').innerHTML=renderHalf('R',rightKeys,flat);
+  hint.textContent=L.hint;
+  notes.innerHTML=L.notes.map(n=>`<div class="card"><h3>${esc(n[0])}</h3><p>${esc(n[1])}</p></div>`).join('');
+  [...tabs.children].forEach((t,j)=>t.setAttribute('aria-selected',j===i?'true':'false'));
+  try{localStorage.setItem('lily58-layer',String(i));}catch(e){}
+}
+layers.forEach((L,i)=>{
+  const b=document.createElement('button'); b.className='tab'; b.id='tab-'+L.name.toLowerCase(); b.setAttribute('role','tab'); b.textContent=L.name;
+  b.addEventListener('click',()=>show(i)); tabs.appendChild(b);
+});
+show(current);
+})();
+</script>
