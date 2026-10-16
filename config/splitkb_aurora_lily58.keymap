@@ -157,16 +157,18 @@
             display-name = "SYM";
 // ------------------------------------------------------------------------------------------------------------
 // |       |     |     |      |      |      |                   |      |       |       |      |       |       |
-// |       |  ~  |  <  |  >   |  $   |  %   |                   |  ^   |   @   |   #   |  !   |   ?   |   Å   |
-// |       |  |  |  (  |  )   |  {   |  }   |                   |  "   |   -   |   _   |  =   |   Ø   |   Æ   |
-// |       |  \  |  [  |  ]   |  &   |  *   |        |  |       |  +   |   `   |       |      |   €   |       |
+// |       |  ~  |  <  |  >   |  $   |  %   |                   |  `   |   @   |   #   |  !   |   Å   |   €   |
+// |       |  (  |  )  |  {   |  }   |  |   |                   |  "   |   -   |   _   |  =   |   Ø   |   ^   |
+// |       |  [  |  ]  |  \   |  &   |  *   |        |  |       |  +   |       |       |  ?   |   Æ   |       |
 //                     |      |      |      |        |  |       | HELD |       |       |
+// Bracket pairs on resting finger pairs: ( ) on A S, { } on D F, [ ] on Z X.
 // Right home row carries the symbols typed most: - _ = under index, middle, ring; " on the inner reach.
+// Å Ø Æ stacked in one column (P ; /), ? on the . key, the rare € and ^ on the outermost column.
             bindings = <
 &trans &trans      &trans      &trans      &trans      &trans                           &trans      &trans       &trans       &trans       &trans         &trans
-&trans &no_tilde   &kp NB_LT   &kp NB_GT   &kp NB_DLLR &kp NB_PRCNT                     &no_caret   &kp NB_AT    &kp NB_HASH  &kp NB_EXCL  &kp NB_QMARK   &kp NB_A_RING
-&trans &kp NB_PIPE &kp NB_LPAR &kp NB_RPAR &kp NB_LBRC &kp NB_RBRC                      &kp NB_DQT  &kp NB_MINUS &kp NB_UNDER &kp NB_EQUAL &kp NB_O_SLASH &kp NB_AE
-&trans &kp NB_BSLH &kp NB_LBKT &kp NB_RBKT &kp NB_AMPS &kp NB_ASTRK &trans     &trans   &kp NB_PLUS &no_grave    &trans       &trans       &kp NB_EURO    &trans
+&trans &no_tilde   &kp NB_LT   &kp NB_GT   &kp NB_DLLR &kp NB_PRCNT                     &no_grave   &kp NB_AT    &kp NB_HASH  &kp NB_EXCL  &kp NB_A_RING  &kp NB_EURO
+&trans &kp NB_LPAR &kp NB_RPAR &kp NB_LBRC &kp NB_RBRC &kp NB_PIPE                      &kp NB_DQT  &kp NB_MINUS &kp NB_UNDER &kp NB_EQUAL &kp NB_O_SLASH &no_caret
+&trans &kp NB_LBKT &kp NB_RBKT &kp NB_BSLH &kp NB_AMPS &kp NB_ASTRK &trans     &trans   &kp NB_PLUS &trans       &trans       &kp NB_QMARK &kp NB_AE      &trans
                                &trans      &trans      &trans       &trans     &trans   &trans      &trans       &trans
             >;
         };
@@ -192,19 +194,19 @@
         mac_layer {
             display-name = "MAC";
             /*
-             * On with Bluetooth profile 1. Left thumbs become Opt, Cmd (Apple order),
-             * so the inner thumb is Cmd: Cmd+Tab, Cmd+C/V, Cmd+-/+ sit where
-             * Alt+Tab, Ctrl+C/V, Ctrl+-/+ are muscle memory on the other hosts.
-             * Pinky stays Ctrl.
+             * On with Bluetooth profile 1 (or FN + MAC by hand). The thumbs keep
+             * their order: the outer GUI key is Cmd on macOS, the ALT key is Opt,
+             * the pinky stays Ctrl. This layer is a flag: with NAV held it enables
+             * MAC_NAV, which swaps the OS-specific NAV keys to Cmd/Opt combos.
              * TODO: the Norwegian macOS layout uses different Option combos for
              * @ $ { } [ ] | \ than Windows/Linux; add a mac SYM layer when needed.
              */
             bindings = <
-&trans &trans &trans &trans    &trans    &trans                        &trans &trans &trans &trans &trans &trans
-&trans &trans &trans &trans    &trans    &trans                        &trans &trans &trans &trans &trans &trans
-&trans &trans &trans &trans    &trans    &trans                        &trans &trans &trans &trans &trans &trans
-&trans &trans &trans &trans    &trans    &trans &trans       &trans    &trans &trans &trans &trans &trans &trans
-                     &kp LALT  &kp LGUI  &trans &trans       &trans    &trans &trans &trans
+&trans &trans &trans &trans &trans &trans                        &trans &trans &trans &trans &trans &trans
+&trans &trans &trans &trans &trans &trans                        &trans &trans &trans &trans &trans &trans
+&trans &trans &trans &trans &trans &trans                        &trans &trans &trans &trans &trans &trans
+&trans &trans &trans &trans &trans &trans &trans       &trans    &trans &trans &trans &trans &trans &trans
+                     &trans &trans &trans &trans       &trans    &trans &trans &trans
             >;
         };
 

@@ -141,9 +141,9 @@ th{font-weight:600;font-size:.78rem;letter-spacing:.04em;text-transform:uppercas
     <h3>Where the shell characters live</h3>
     <ul>
       <li><code>/</code> <code>.</code> <code>,</code> <code>;</code> <code>'</code> on BASE; Shift gives <code>_</code> <code>:</code> <code>*</code> for free on the Norwegian layout. The Lily58 also has <code>=</code> and <code>-</code> on its inner keys.</li>
-      <li>SYM right home row, the best spots: <code>"</code> on H, <code>-</code> on J, <code>_</code> on K, <code>=</code> on L. Ø and Æ stay on the pinky side where a Norwegian keyboard has them, Å right of P.</li>
-      <li>SYM left hand: brackets as pairs under ring + middle, one pair per row: <code>&lt; &gt;</code>, <code>( )</code>, <code>[ ]</code>, with <code>{ }</code> right of <code>( )</code>; <code>~</code> <code>|</code> <code>\</code> on the index-reach column, <code>$ %</code> and <code>&amp; *</code> on the inner columns.</li>
-      <li><code>€</code> is pushed out to the bottom-row ring finger; <code>+</code> and <code>`</code> sit under N and M.</li>
+      <li>SYM right home row, the best spots: <code>"</code> on H, <code>-</code> on J, <code>_</code> on K, <code>=</code> on L. Å Ø Æ stacked in the column after that (P, ;, /), <code>?</code> on the <code>.</code> key.</li>
+      <li>SYM left hand: bracket pairs on resting finger pairs: <code>( )</code> on A S, <code>{ }</code> on D F, <code>[ ]</code> on Z X. <code>|</code> on G, <code>\</code> on C, <code>&amp; *</code> on V B, <code>~ &lt; &gt; $ %</code> on the top row.</li>
+      <li>The rare <code>€</code> and <code>^</code> are pushed to the outermost right column; <code>`</code> on Y, <code>+</code> on N.</li>
     </ul>
   </div>
   <div class="card">
@@ -161,7 +161,7 @@ th{font-weight:600;font-size:.78rem;letter-spacing:.04em;text-transform:uppercas
   </div>
   <div class="card">
     <h3>macOS</h3>
-    <p>Profile 1 is the Mac. Selecting it turns on the MAC layer, which puts the left thumbs in Apple order (Opt, Cmd), so the thumb next to NAV is Alt on Windows/Linux and Cmd on macOS: app switching, copy/paste and zoom land on the same finger everywhere. NAV + MAC automatically becomes a Cmd/Opt variant of NAV. On the Iris, FN + MAC toggles the same thing by hand.</p>
+    <p>Profile 1 is the Mac. Selecting it turns on the MAC layer, a flag that leaves BASE alone (the GUI thumb is Cmd and ALT is Opt on macOS natively, Ctrl stays on the pinky) and makes NAV + MAC automatically become the Cmd/Opt variant of NAV: Option word jumps, Cmd zoom, Cmd same-app window switching. On the Iris, FN + MAC toggles the same thing by hand.</p>
     <p style="margin-top:6px">Still open: the Norwegian Mac layout puts <code>@</code> <code>$</code> brackets <code>|</code> <code>\</code> on other Option combos, so a Mac SYM layer is the next step.</p>
   </div>
   <div class="card">
@@ -219,13 +219,13 @@ const symMain={
  left:[
   [_,_,_,_,_,_],
   [_,['~',S],['<',S],['>',S],['$',S],['%',S]],
-  [_,['|',S],['(',S],[')',S],['{',S],['}',S]],
-  [_,['\\',S],['[',S],[']',S],['&',S],['*',S]] ],
+  [_,['(',S],[')',S],['{',S],['}',S],['|',S]],
+  [_,['[',S],[']',S],['\\',S],['&',S],['*',S]] ],
  right:[
   [_,_,_,_,_,_],
-  [['^',S],['@',S],['#',S],['!',S],['?',S],['Å',A]],
-  [['"',S],['-',S],['_',S],['=',S],['Ø',A],['Æ',A]],
-  [['+',S],['`',S],_,_,['€',S],_] ]
+  [['`',S],['@',S],['#',S],['!',S],['Å',A],['€',S]],
+  [['"',S],['-',S],['_',S],['=',S],['Ø',A],['^',S]],
+  [['+',S],_,_,['?',S],['Æ',A],_] ]
 };
 const fnLeftRows=[
   [_,['F1',F],['F2',F],['F3',F],['F4',F],['F5',F]],
@@ -250,13 +250,13 @@ const edges={
   NAV:{innerL:['ZOOM +',N],innerR:['ZOOM −',N],thumbsL:[_,_,['NAV',L,'','held'],_],thumbsR:[_,_,_,_]},
   SYM:{innerL:_,innerR:_,thumbsL:[_,_,_,_],thumbsR:[_,['SYM',L,'','held'],_,_]},
   FN:{innerL:_,innerR:_,thumbsL:[_,_,_,_],thumbsR:[_,_,_,['FN',L,'','held']]},
-  MAC:{innerL:_,innerR:_,thumbsL:[['OPT',M,'⌥'],['CMD',M,'⌘'],_,_],thumbsR:[_,_,_,_]} },
+  MAC:{innerL:_,innerR:_,thumbsL:[['CMD',M,'⌘'],['OPT',M,'⌥'],_,_],thumbsR:[_,_,_,_]} },
  iris:{
   BASE:{innerL:['ALT',M],innerR:['-',S,'_'],thumbsL:[['GUI',M],['NAV',L,'','hold'],['SPACE',M]],thumbsR:[['ENTER',M],['SYM',L,'','hold'],['FN',L,'','hold']]},
   NAV:{innerL:['ZOOM +',N],innerR:['ZOOM −',N],thumbsL:[_,['NAV',L,'','held'],_],thumbsR:[_,_,_]},
   SYM:{innerL:_,innerR:_,thumbsL:[_,_,_],thumbsR:[_,['SYM',L,'','held'],_]},
   FN:{innerL:_,innerR:_,thumbsL:[_,_,_],thumbsR:[_,_,['FN',L,'','held']]},
-  MAC:{innerL:['CMD',M,'⌘'],innerR:_,thumbsL:[['OPT',M,'⌥'],_,_],thumbsR:[_,_,_]} }
+  MAC:{innerL:['OPT',M,'⌥'],innerR:_,thumbsL:[['CMD',M,'⌘'],_,_],thumbsR:[_,_,_]} }
 };
 const boards={
  lily58:{name:'Lily58',spec:[['Board','Aurora Lily58, nice!nano v2, nice!view'],['Firmware','ZMK + zmk-locales keys_nb.h'],['Link','Bluetooth, 5 host profiles'],['Keys','58']]},
@@ -276,10 +276,10 @@ const layers=[
               ['Modifiers','Shift and Ctrl on the left pinky column pass through: Shift + NAV + S selects left, Ctrl + NAV + D jumps a word.'],
               ['Window and zoom','WIN on the Tab key cycles windows of the same app (Alt+` on Linux, Cmd+< on the Mac). Zoom in/out on the two inner keys, zoom reset on H. All of these switch to their Cmd/Opt versions automatically while the MAC layer is on.'],
               ['Right hand','Media: play, volume, mute, brightness on the top letter row.']]}},
- {name:'SYM',hint:'Hold the right thumb. Right home row carries the symbols typed most; left hand has the bracket pairs under ring + middle, one pair per row.',
-  notes:{all:[['Right home row','" on H, - on J, _ on K, = on L, then Ø and Æ where a Norwegian keyboard has them. Å right of P.'],
-              ['Right hand, other rows','^ @ # ! ? above, + and ` under N and M, € pushed out to the bottom-row ring finger.'],
-              ['Left hand','Row by row: ~ < > $ %  /  | ( ) { }  /  \\ [ ] & *.'],
+ {name:'SYM',hint:'Hold the right thumb. Bracket pairs on resting finger pairs on the left; the right home row carries the symbols typed most.',
+  notes:{all:[['Bracket pairs','( ) on A S, { } on D F, [ ] on Z X: pinky + ring and middle + index, where the fingers already rest. | on G, \\ on C, & * on V B, ~ < > $ % on the top row.'],
+              ['Right home row','" on H, - on J, _ on K, = on L.'],
+              ['Å Ø Æ','One column: Å on P, Ø on ;, Æ on /. ? sits on the . key. The rare € and ^ are pushed to the outermost column; ` on Y, + on N.'],
               ['Digits','Number row falls through, so SYM + 7 still types 7. Useful for $1, ${2}, [0].']]}},
  {name:'FN',hint:'Hold the right outer thumb. Numpad under the right hand, F-keys under the left.',
   notes:{lily58:[['Hosts','FN + 1..5 is one macro each: select the Bluetooth profile and set the underglow to that profile\'s colour (red, green, blue, yellow, purple). BT CLR forgets the current profile, USB/BT switches output when cabled.'],
@@ -288,11 +288,11 @@ const layers=[
          iris:[['RGB','Wired board, so no host profiles. Top row: RGB on/off, next mode, hue, saturation, brightness.'],
                ['Numpad','7 8 9 / 4 5 6 / 1 2 3 under U I O, J K L, M , . with 0 on N. Operators on the outer columns.'],
                ['Mac','MAC toggles the macOS modifier order by hand.']]}},
- {name:'MAC',hint:'Apple modifier order. Lily58: on automatically with Bluetooth profile 1, off with 2 to 5, or by hand with FN + MAC. Iris: FN + MAC toggles it.',
-  notes:{lily58:[['Thumbs','Left thumbs become Opt, Cmd, so the thumb next to NAV is Cmd: Cmd+Tab, Cmd+C/V and Cmd+zoom sit where Alt+Tab, Ctrl+C/V and Ctrl+zoom live on the other hosts. Pinky stays Ctrl.'],
+ {name:'MAC',hint:'Mac flag layer. Lily58: on automatically with Bluetooth profile 1, off with 2 to 5, or by hand with FN + MAC. Iris: FN + MAC toggles it. Nothing moves on BASE: the GUI key is Cmd and ALT is Opt on macOS already.',
+  notes:{lily58:[['Thumbs','Cmd on the outer thumb (GUI), Opt next to it (ALT), Ctrl on the pinky, same as every other host. The layer only changes what NAV does.'],
                  ['NAV while MAC','Word jumps and word deletes become Option combos, zoom and same-app window switching become Cmd combos, at the same positions.'],
                  ['Open','The Norwegian Mac layout puts @ $ brackets | \\ on other Option combos, so a Mac SYM layer is the next step.']],
-         iris:[['Keys','The inner row-4 key becomes Cmd and the outer thumb Opt, mirroring the Lily58: Cmd+Tab and Cmd+C/V under the same finger as Alt+Tab and Ctrl+C/V elsewhere.'],
+         iris:[['Keys','Cmd on the GUI thumb, Opt on the inner ALT key, Ctrl on the pinky. Nothing moves.'],
                ['NAV while MAC','Same as the Lily58: Option word jumps, Cmd zoom and window switching, same positions.'],
                ['Open','A Mac SYM layer for the Norwegian macOS Option combos.']]}}
 ];

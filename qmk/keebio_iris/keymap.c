@@ -64,19 +64,20 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                       _______, _______, _______,            _______, _______, _______
 ),
 
-/* SYM (hold right thumb) - bracket pairs under ring+middle on the left, - _ = on the right home row
+/* SYM (hold right thumb) - bracket pairs on resting finger pairs, - _ = on the right home row,
+ * Å Ø Æ in one column, ? on the . key, the rare € and ^ on the outermost column
  * ,-----------------------------------------.                ,-----------------------------------------.
  * |      |      |      |      |      |      |                |      |      |      |      |      |      |
- * |      |  ~   |  <   |  >   |  $   |  %   |                |  ^   |  @   |  #   |  !   |  ?   |  Å   |
- * |      |  |   |  (   |  )   |  {   |  }   |                |  "   |  -   |  _   |  =   |  Ø   |  Æ   |
- * |      |  \   |  [   |  ]   |  &   |  *   |      |  |      |  +   |  `   |      |      |  €   |      |
+ * |      |  ~   |  <   |  >   |  $   |  %   |                |  `   |  @   |  #   |  !   |  Å   |  €   |
+ * |      |  (   |  )   |  {   |  }   |  |   |                |  "   |  -   |  _   |  =   |  Ø   |  ^   |
+ * |      |  [   |  ]   |  \   |  &   |  *   |      |  |      |  +   |      |      |  ?   |  Æ   |      |
  * `--------------------------'      |      |      |  |      | HELD |      '--------------------------'
  */
 [SYM] = LAYOUT(
-  _______, _______,   _______, _______, _______, _______,                     _______,   _______, _______, _______, _______, _______,
-  _______, NO_TILD_S, NO_LABK, NO_RABK, NO_DLR,  NO_PERC,                     NO_CIRC_S, NO_AT,   NO_HASH, NO_EXLM, NO_QUES, NO_ARNG,
-  _______, NO_PIPE,   NO_LPRN, NO_RPRN, NO_LCBR, NO_RCBR,                     NO_DQUO,   NO_MINS, NO_UNDS, NO_EQL,  NO_OSTR, NO_AE,
-  _______, NO_BSLS,   NO_LBRC, NO_RBRC, NO_AMPR, NO_ASTR, _______,   _______, NO_PLUS,   NO_GRV_S,_______, _______, NO_EURO, _______,
+  _______, _______,   _______, _______, _______, _______,                     _______,  _______, _______, _______, _______, _______,
+  _______, NO_TILD_S, NO_LABK, NO_RABK, NO_DLR,  NO_PERC,                     NO_GRV_S, NO_AT,   NO_HASH, NO_EXLM, NO_ARNG, NO_EURO,
+  _______, NO_LPRN,   NO_RPRN, NO_LCBR, NO_RCBR, NO_PIPE,                     NO_DQUO,  NO_MINS, NO_UNDS, NO_EQL,  NO_OSTR, NO_CIRC_S,
+  _______, NO_LBRC,   NO_RBRC, NO_BSLS, NO_AMPR, NO_ASTR, _______,   _______, NO_PLUS,  _______, _______, NO_QUES, NO_AE,   _______,
                                    _______, _______, _______,            _______, _______, _______
 ),
 
@@ -96,16 +97,16 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                    _______, _______, _______,            _______, _______, _______
 ),
 
-/* MAC (toggle with FN + MAC) - Apple modifier order: inner row-4 key becomes Cmd, outer thumb becomes Opt,
- * so Cmd+Tab, Cmd+C/V, Cmd+-/+ sit where Alt+Tab, Ctrl+C/V, Ctrl+-/+ live on the other hosts. Pinky stays Ctrl.
+/* MAC (toggle with FN + MAC) - a flag layer. GUI thumb is Cmd and the inner ALT key is Opt on macOS already,
+ * so nothing moves; with NAV held this enables MAC_NAV, the Cmd/Opt variant of the OS-specific NAV keys.
  * TODO: Norwegian macOS layout uses different Option combos for @ $ { } [ ] | \ ; add a mac SYM when needed.
  */
 [MAC] = LAYOUT(
   _______, _______, _______, _______, _______, _______,                     _______, _______, _______, _______, _______, _______,
   _______, _______, _______, _______, _______, _______,                     _______, _______, _______, _______, _______, _______,
   _______, _______, _______, _______, _______, _______,                     _______, _______, _______, _______, _______, _______,
-  _______, _______, _______, _______, _______, _______, KC_LGUI,   _______, _______, _______, _______, _______, _______, _______,
-                                   KC_LALT, _______, _______,            _______, _______, _______
+  _______, _______, _______, _______, _______, _______, _______,   _______, _______, _______, _______, _______, _______, _______,
+                                   _______, _______, _______,            _______, _______, _______
 ),
 
 /* MAC_NAV (automatic while MAC and NAV are both held) - Cmd/Opt versions of the OS-specific NAV keys */
