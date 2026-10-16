@@ -161,7 +161,12 @@ th{font-weight:600;font-size:.78rem;letter-spacing:.04em;text-transform:uppercas
   </div>
   <div class="card">
     <h3>macOS</h3>
-    <p>FN + MAC toggles a layer that swaps Ctrl and Cmd on the bottom-left and thumb. The Norwegian Mac layout uses different Option combos for brackets and <code>@</code>; a Mac variant of SYM is a TODO for when the Mac profile is in use.</p>
+    <p>Profile 1 is the Mac. Selecting it turns on the MAC layer, which puts the left thumbs in Apple order (Opt, Cmd), so the thumb next to NAV is Alt on Windows/Linux and Cmd on macOS: app switching, copy/paste and zoom land on the same finger everywhere. NAV + MAC automatically becomes a Cmd/Opt variant of NAV. On the Iris, FN + MAC toggles the same thing by hand.</p>
+    <p style="margin-top:6px">Still open: the Norwegian Mac layout puts <code>@</code> <code>$</code> brackets <code>|</code> <code>\</code> on other Option combos, so a Mac SYM layer is the next step.</p>
+  </div>
+  <div class="card">
+    <h3>Lily58 hardware overlay</h3>
+    <p><code>config/splitkb_aurora_lily58.overlay</code> moves the nice!view chip-select to P0.08, because the Aurora uses P0.06 (the adapter's default CS) for the WS2812 data line, and sets the LED chain to 34 per half (5 underglow + 29 per-key). Without it the display and LEDs fight over one pin.</p>
   </div>
   <div class="card">
     <h3>Firmware</h3>
@@ -200,15 +205,16 @@ const baseMain={
 const navMain={
  left:[
   [_,_,_,_,_,_],
-  [_,['INS',N],['⌃⌫',N,'','word'],['⌃DEL',N,'','word'],['PGUP',N],['DEL',N]],
+  [['WIN',N,'','same app'],['INS',N],['⌃⌫',N,'','word'],['⌃DEL',N,'','word'],['PGUP',N],['DEL',N]],
   [_,['HOME',N],['←',N],['→',N],['↑',N],['END',N]],
   [_,['PRTSC',N],['⌃←',N,'','word'],['⌃→',N,'','word'],['↓',N],['PGDN',N]] ],
  right:[
   [_,_,_,_,_,_],
   [['PLAY',MD],['VOL−',MD],['VOL+',MD],['MUTE',MD],['BRI−',MD],['BRI+',MD]],
-  [_,_,_,_,_,_],
+  [['ZOOM 0',N,'','reset'],_,_,_,_,_],
   [_,_,_,_,_,_] ]
 };
+const macMain={left:[[_,_,_,_,_,_],[_,_,_,_,_,_],[_,_,_,_,_,_],[_,_,_,_,_,_]],right:[[_,_,_,_,_,_],[_,_,_,_,_,_],[_,_,_,_,_,_],[_,_,_,_,_,_]]};
 const symMain={
  left:[
   [_,_,_,_,_,_],
@@ -235,18 +241,22 @@ const fnMain={
  iris:  { left:[[_,['RGB',B,'','on/off'],['MODE',B],['HUE+',B],['SAT+',B],['BRI+',B]]].concat(fnLeftRows),
           right:[[_,_,_,_,_,['MAC',B,'','toggle']]].concat(fnRightRows)}
 };
+fnMain.lily58.left[0][1]=['BT 1',B,'red','Mac'];
+fnMain.lily58.right[0][5]=['MAC',B,'','manual'];
 // Thumb rows and inner keys, per board. Thumbs listed from the centre outward on both halves.
 const edges={
  lily58:{
   BASE:{innerL:['=',S],innerR:['-',S,'_'],thumbsL:[['GUI',M],['ALT',M],['NAV',L,'','hold'],['SPACE',M]],thumbsR:[['ENTER',M],['SYM',L,'','hold'],['BSPC',M],['FN',L,'','hold']]},
-  NAV:{innerL:_,innerR:_,thumbsL:[_,_,['NAV',L,'','held'],_],thumbsR:[_,_,_,_]},
+  NAV:{innerL:['ZOOM +',N],innerR:['ZOOM −',N],thumbsL:[_,_,['NAV',L,'','held'],_],thumbsR:[_,_,_,_]},
   SYM:{innerL:_,innerR:_,thumbsL:[_,_,_,_],thumbsR:[_,['SYM',L,'','held'],_,_]},
-  FN:{innerL:_,innerR:_,thumbsL:[_,_,_,_],thumbsR:[_,_,_,['FN',L,'','held']]} },
+  FN:{innerL:_,innerR:_,thumbsL:[_,_,_,_],thumbsR:[_,_,_,['FN',L,'','held']]},
+  MAC:{innerL:_,innerR:_,thumbsL:[['OPT',M,'⌥'],['CMD',M,'⌘'],_,_],thumbsR:[_,_,_,_]} },
  iris:{
   BASE:{innerL:['ALT',M],innerR:['-',S,'_'],thumbsL:[['GUI',M],['NAV',L,'','hold'],['SPACE',M]],thumbsR:[['ENTER',M],['SYM',L,'','hold'],['FN',L,'','hold']]},
-  NAV:{innerL:_,innerR:_,thumbsL:[_,['NAV',L,'','held'],_],thumbsR:[_,_,_]},
+  NAV:{innerL:['ZOOM +',N],innerR:['ZOOM −',N],thumbsL:[_,['NAV',L,'','held'],_],thumbsR:[_,_,_]},
   SYM:{innerL:_,innerR:_,thumbsL:[_,_,_],thumbsR:[_,['SYM',L,'','held'],_]},
-  FN:{innerL:_,innerR:_,thumbsL:[_,_,_],thumbsR:[_,_,['FN',L,'','held']]} }
+  FN:{innerL:_,innerR:_,thumbsL:[_,_,_],thumbsR:[_,_,['FN',L,'','held']]},
+  MAC:{innerL:['CMD',M,'⌘'],innerR:_,thumbsL:[['OPT',M,'⌥'],_,_],thumbsR:[_,_,_]} }
 };
 const boards={
  lily58:{name:'Lily58',spec:[['Board','Aurora Lily58, nice!nano v2, nice!view'],['Firmware','ZMK + zmk-locales keys_nb.h'],['Link','Bluetooth, 5 host profiles'],['Keys','58']]},
@@ -264,6 +274,7 @@ const layers=[
   notes:{all:[['Arrows','S ← , D → , F ↑ , V ↓ under the left thumb hold. Home on A, End on G.'],
               ['Pages and words','PgUp above the up arrow on R, PgDn beside the down arrow on B. Word left/right under the arrows on X and C, delete word back/forward on W and E, Insert on Q, Del on T, PrtSc on Z.'],
               ['Modifiers','Shift and Ctrl on the left pinky column pass through: Shift + NAV + S selects left, Ctrl + NAV + D jumps a word.'],
+              ['Window and zoom','WIN on the Tab key cycles windows of the same app (Alt+` on Linux, Cmd+< on the Mac). Zoom in/out on the two inner keys, zoom reset on H. All of these switch to their Cmd/Opt versions automatically while the MAC layer is on.'],
               ['Right hand','Media: play, volume, mute, brightness on the top letter row.']]}},
  {name:'SYM',hint:'Hold the right thumb. Right home row carries the symbols typed most; left hand has the bracket pairs under ring + middle, one pair per row.',
   notes:{all:[['Right home row','" on H, - on J, _ on K, = on L, then Ø and Æ where a Norwegian keyboard has them. Å right of P.'],
@@ -276,9 +287,16 @@ const layers=[
                  ['Numpad','7 8 9 / 4 5 6 / 1 2 3 under U I O, J K L, M , . with 0 on N. Operators on the outer columns.']],
          iris:[['RGB','Wired board, so no host profiles. Top row: RGB on/off, next mode, hue, saturation, brightness.'],
                ['Numpad','7 8 9 / 4 5 6 / 1 2 3 under U I O, J K L, M , . with 0 on N. Operators on the outer columns.'],
-               ['Mac','MAC toggles the macOS variant (Cmd on bottom-left pinky, Ctrl on the left thumb).']]}}
+               ['Mac','MAC toggles the macOS modifier order by hand.']]}},
+ {name:'MAC',hint:'Apple modifier order. Lily58: on automatically with Bluetooth profile 1, off with 2 to 5, or by hand with FN + MAC. Iris: FN + MAC toggles it.',
+  notes:{lily58:[['Thumbs','Left thumbs become Opt, Cmd, so the thumb next to NAV is Cmd: Cmd+Tab, Cmd+C/V and Cmd+zoom sit where Alt+Tab, Ctrl+C/V and Ctrl+zoom live on the other hosts. Pinky stays Ctrl.'],
+                 ['NAV while MAC','Word jumps and word deletes become Option combos, zoom and same-app window switching become Cmd combos, at the same positions.'],
+                 ['Open','The Norwegian Mac layout puts @ $ brackets | \\ on other Option combos, so a Mac SYM layer is the next step.']],
+         iris:[['Keys','The inner row-4 key becomes Cmd and the outer thumb Opt, mirroring the Lily58: Cmd+Tab and Cmd+C/V under the same finger as Alt+Tab and Ctrl+C/V elsewhere.'],
+               ['NAV while MAC','Same as the Lily58: Option word jumps, Cmd zoom and window switching, same positions.'],
+               ['Open','A Mac SYM layer for the Norwegian macOS Option combos.']]}}
 ];
-const mains={BASE:()=>baseMain,NAV:()=>navMain,SYM:()=>symMain,FN:b=>fnMain[b]};
+const mains={BASE:()=>baseMain,NAV:()=>navMain,SYM:()=>symMain,FN:b=>fnMain[b],MAC:()=>macMain};
 
 function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
 function keySVG(g,spec,ghost){

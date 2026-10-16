@@ -8,13 +8,13 @@
  * OS keyboard layout on every host: Norwegian. Symbols use NO_ keycodes so
  * the firmware sends the right (AltGr) scancodes.
  *
- * Layers: BASE, NAV, SYM, FN, MAC
+ * Layers: BASE, NAV, SYM, FN, MAC, MAC_NAV (NAV + MAC, automatic)
  */
 
 #include QMK_KEYBOARD_H
 #include "keymap_norwegian.h"
 
-enum layers { BASE, NAV, SYM, FN, MAC };
+enum layers { BASE, NAV, SYM, FN, MAC, MAC_NAV };
 
 /* Dead keys on the Norwegian layout: tap the key, then space, so the plain symbol comes out. */
 enum custom_keycodes { NO_TILD_S = SAFE_RANGE, NO_CIRC_S, NO_GRV_S };
@@ -50,17 +50,18 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 /* NAV (hold left thumb) - arrows on the left hand so the right hand stays on the mouse
  * ,-----------------------------------------.                ,-----------------------------------------.
  * |      |      |      |      |      |      |                |      |      |      |      |      |      |
- * |      | INS  |C+BSP |C+DEL | PGUP | DEL  |                | PLAY | VOL- | VOL+ | MUTE | BRI- | BRI+ |
- * |      | HOME |  <-  |  ->  |  ^   | END  |                |      |      |      |      |      |      |
- * |      |PRTSC | C+<- | C+-> |  v   | PGDN |      |  |      |      |      |      |      |      |      |
+ * | WIN  | INS  |C+BSP |C+DEL | PGUP | DEL  |                | PLAY | VOL- | VOL+ | MUTE | BRI- | BRI+ |
+ * |      | HOME |  <-  |  ->  |  ^   | END  |                |ZOOM0 |      |      |      |      |      |
+ * |      |PRTSC | C+<- | C+-> |  v   | PGDN |ZOOM+ |  |ZOOM- |      |      |      |      |      |      |
  * `--------------------------'      | HELD |      |  |      |      |      '--------------------------'
+ * WIN = next window of the same app (Alt+` on Linux/GNOME).
  */
 [NAV] = LAYOUT(
-  _______, _______, _______,    _______,    _______, _______,                     _______, _______, _______, _______, _______, _______,
-  _______, KC_INS,  C(KC_BSPC), C(KC_DEL),  KC_PGUP, KC_DEL,                      KC_MPLY, KC_VOLD, KC_VOLU, KC_MUTE, KC_BRID, KC_BRIU,
-  _______, KC_HOME, KC_LEFT,    KC_RGHT,    KC_UP,   KC_END,                      _______, _______, _______, _______, _______, _______,
-  _______, KC_PSCR, C(KC_LEFT), C(KC_RGHT), KC_DOWN, KC_PGDN, _______,   _______, _______, _______, _______, _______, _______, _______,
-                                   _______, _______, _______,            _______, _______, _______
+  _______,    _______, _______,    _______,    _______, _______,                        _______,    _______, _______, _______, _______, _______,
+  A(NO_PIPE), KC_INS,  C(KC_BSPC), C(KC_DEL),  KC_PGUP, KC_DEL,                         KC_MPLY,    KC_VOLD, KC_VOLU, KC_MUTE, KC_BRID, KC_BRIU,
+  _______,    KC_HOME, KC_LEFT,    KC_RGHT,    KC_UP,   KC_END,                         C(NO_0),    _______, _______, _______, _______, _______,
+  _______,    KC_PSCR, C(KC_LEFT), C(KC_RGHT), KC_DOWN, KC_PGDN, C(NO_PLUS), C(NO_MINS), _______,   _______, _______, _______, _______, _______,
+                                      _______, _______, _______,            _______, _______, _______
 ),
 
 /* SYM (hold right thumb) - bracket pairs under ring+middle on the left, - _ = on the right home row
@@ -95,14 +96,29 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                    _______, _______, _______,            _______, _______, _______
 ),
 
-/* MAC (toggle with FN + MAC) - Cmd on the bottom-left pinky, Ctrl on the left thumb
- * TODO: Norwegian macOS layout uses different Option combos for @ $ { } [ ] | \ ; add a mac SYM when the Mac is in use.
+/* MAC (toggle with FN + MAC) - Apple modifier order: inner row-4 key becomes Cmd, outer thumb becomes Opt,
+ * so Cmd+Tab, Cmd+C/V, Cmd+-/+ sit where Alt+Tab, Ctrl+C/V, Ctrl+-/+ live on the other hosts. Pinky stays Ctrl.
+ * TODO: Norwegian macOS layout uses different Option combos for @ $ { } [ ] | \ ; add a mac SYM when needed.
  */
 [MAC] = LAYOUT(
   _______, _______, _______, _______, _______, _______,                     _______, _______, _______, _______, _______, _______,
   _______, _______, _______, _______, _______, _______,                     _______, _______, _______, _______, _______, _______,
   _______, _______, _______, _______, _______, _______,                     _______, _______, _______, _______, _______, _______,
-  KC_LGUI, _______, _______, _______, _______, _______, _______,   _______, _______, _______, _______, _______, _______, _______,
-                                   KC_LCTL, _______, _______,            _______, _______, _______
+  _______, _______, _______, _______, _______, _______, KC_LGUI,   _______, _______, _______, _______, _______, _______, _______,
+                                   KC_LALT, _______, _______,            _______, _______, _______
+),
+
+/* MAC_NAV (automatic while MAC and NAV are both held) - Cmd/Opt versions of the OS-specific NAV keys */
+[MAC_NAV] = LAYOUT(
+  _______,    _______, _______,    _______,    _______, _______,                        _______,    _______, _______, _______, _______, _______,
+  G(NO_LABK), _______, A(KC_BSPC), A(KC_DEL),  _______, _______,                        _______,    _______, _______, _______, _______, _______,
+  _______,    _______, _______,    _______,    _______, _______,                        G(NO_0),    _______, _______, _______, _______, _______,
+  _______,    _______, A(KC_LEFT), A(KC_RGHT), _______, _______, G(NO_PLUS), G(NO_MINS), _______,   _______, _______, _______, _______, _______,
+                                      _______, _______, _______,            _______, _______, _______
 )
 };
+
+/* MAC + NAV together activate MAC_NAV. */
+layer_state_t layer_state_set_user(layer_state_t state) {
+    return update_tri_layer_state(state, NAV, MAC, MAC_NAV);
+}
