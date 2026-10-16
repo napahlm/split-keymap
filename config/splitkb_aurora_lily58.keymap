@@ -5,7 +5,11 @@
  * Symbols are emitted through the NB_ key codes from zmk-locales, so the
  * firmware sends the Norwegian scancode (incl. AltGr combos) for each symbol.
  *
- * Layers: 0 BASE  1 NAV  2 SYM  3 FN  4 MAC
+ * Layers: 0 BASE  1 NAV  2 SYM  3 FN  4 MAC  5 MAC_NAV (NAV + MAC, automatic)
+ *
+ * Cross-OS rule: inner left thumb + Tab switches apps everywhere
+ * (Alt+Tab on Windows/Linux, Cmd+Tab on macOS). The MAC layer turns on with
+ * Bluetooth profile 1 (FN+1) and off with profiles 2-5.
  *
  * Visual map: docs/keymap.html
  * The Keebio Iris rev7 (QMK) in qmk/ shares all layers except the thumb row.
@@ -23,8 +27,30 @@
 #define SYM  2
 #define FN   3
 #define MAC  4
+#define MAC_NAV 5
 
 / {
+    behaviors {
+        tog_on: tog_on {
+            compatible = "zmk,behavior-toggle-layer";
+            #binding-cells = <1>;
+            toggle-mode = "on";
+        };
+        tog_off: tog_off {
+            compatible = "zmk,behavior-toggle-layer";
+            #binding-cells = <1>;
+            toggle-mode = "off";
+        };
+    };
+
+    conditional_layers {
+        compatible = "zmk,conditional-layers";
+        mac_nav {
+            if-layers = <NAV MAC>;
+            then-layer = <MAC_NAV>;
+        };
+    };
+
     macros {
         /* Dead keys on the Norwegian layout: send the key, then a space, so the plain symbol comes out. */
         no_tilde: no_tilde {
@@ -49,31 +75,32 @@
             bindings = <&kp NB_GRAVE>, <&kp SPACE>;
         };
 
-        /* Host switch: select the Bluetooth profile and set the underglow to that host's colour. */
+        /* Host switch: select the Bluetooth profile, set the underglow to that host's colour,
+         * and turn the MAC layer on (profile 1 = Mac) or off (2-5). */
         bt0: bt0 {
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
-            bindings = <&bt BT_SEL 0>, <&rgb_ug RGB_COLOR_HSB(0,100,20)>;     /* red */
+            bindings = <&bt BT_SEL 0>, <&rgb_ug RGB_COLOR_HSB(0,100,20)>, <&tog_on MAC>;     /* red, Mac */
         };
         bt1: bt1 {
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
-            bindings = <&bt BT_SEL 1>, <&rgb_ug RGB_COLOR_HSB(120,100,20)>;   /* green */
+            bindings = <&bt BT_SEL 1>, <&rgb_ug RGB_COLOR_HSB(120,100,20)>, <&tog_off MAC>;   /* green */
         };
         bt2: bt2 {
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
-            bindings = <&bt BT_SEL 2>, <&rgb_ug RGB_COLOR_HSB(240,100,20)>;   /* blue */
+            bindings = <&bt BT_SEL 2>, <&rgb_ug RGB_COLOR_HSB(240,100,20)>, <&tog_off MAC>;   /* blue */
         };
         bt3: bt3 {
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
-            bindings = <&bt BT_SEL 3>, <&rgb_ug RGB_COLOR_HSB(60,100,20)>;    /* yellow */
+            bindings = <&bt BT_SEL 3>, <&rgb_ug RGB_COLOR_HSB(60,100,20)>, <&tog_off MAC>;   /* yellow */
         };
         bt4: bt4 {
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
-            bindings = <&bt BT_SEL 4>, <&rgb_ug RGB_COLOR_HSB(280,100,20)>;   /* purple */
+            bindings = <&bt BT_SEL 4>, <&rgb_ug RGB_COLOR_HSB(280,100,20)>, <&tog_off MAC>;   /* purple */
         };
     };
 
@@ -111,17 +138,18 @@
             display-name = "NAV";
 // ------------------------------------------------------------------------------------------------------------
 // |       |     |     |      |      |      |                   |      |       |       |      |       |       |
-// |       | INS |C+BSP| C+DEL| PGUP | DEL  |                   | PLAY | VOL-  | VOL+  | MUTE | BRI-  | BRI+  |
-// |       | HOME|  <- |  ->  |  ^   | END  |                   |      |       |       |      |       |       |
-// |       |PRTSC| C+<-| C+-> |  v   | PGDN |        |  |       |      |       |       |      |       |       |
+// |  WIN  | INS |C+BSP| C+DEL| PGUP | DEL  |                   | PLAY | VOL-  | VOL+  | MUTE | BRI-  | BRI+  |
+// |       | HOME|  <- |  ->  |  ^   | END  |                   |ZOOM0 |       |       |      |       |       |
+// |       |PRTSC| C+<-| C+-> |  v   | PGDN | ZOOM+  |  | ZOOM- |      |       |       |      |       |       |
 //                     |      |      | HELD |        |  |       |      |       |       |
 // Arrows on the left hand so the right hand can stay on the mouse. Shift/Ctrl on the left pinky column pass through.
+// WIN = next window of the same app (Alt+` on Linux/GNOME, Cmd+< on macOS via MAC_NAV)
             bindings = <
-&trans &trans    &trans       &trans        &trans    &trans                       &trans   &trans       &trans       &trans     &trans       &trans
-&trans &kp INS   &kp LC(BSPC) &kp LC(DEL)   &kp PG_UP &kp DEL                      &kp C_PP &kp C_VOL_DN &kp C_VOL_UP &kp C_MUTE &kp C_BRI_DN &kp C_BRI_UP
-&trans &kp HOME  &kp LEFT     &kp RIGHT     &kp UP    &kp END                      &trans   &trans       &trans       &trans     &trans       &trans
-&trans &kp PSCRN &kp LC(LEFT) &kp LC(RIGHT) &kp DOWN  &kp PG_DN &trans    &trans   &trans   &trans       &trans       &trans     &trans       &trans
-                              &trans        &trans    &trans    &trans    &trans   &trans   &trans       &trans
+&trans          &trans    &trans       &trans        &trans    &trans                                   &trans        &trans       &trans       &trans     &trans       &trans
+&kp LA(NB_PIPE) &kp INS   &kp LC(BSPC) &kp LC(DEL)   &kp PG_UP &kp DEL                                  &kp C_PP      &kp C_VOL_DN &kp C_VOL_UP &kp C_MUTE &kp C_BRI_DN &kp C_BRI_UP
+&trans          &kp HOME  &kp LEFT     &kp RIGHT     &kp UP    &kp END                                  &kp LC(NB_N0) &trans       &trans       &trans     &trans       &trans
+&trans          &kp PSCRN &kp LC(LEFT) &kp LC(RIGHT) &kp DOWN  &kp PG_DN &kp LC(NB_PLUS) &kp LC(NB_MINUS) &trans      &trans       &trans       &trans     &trans       &trans
+                                       &trans        &trans    &trans    &trans          &trans           &trans      &trans       &trans
             >;
         };
 
@@ -151,6 +179,7 @@
 // |       | F6  | F7  | F8   | F9   | F10  |                   |  *   |   4   |   5   |  6   |   +   | ENTER |
 // |       | F11 | F12 |      |      |      |        |  |       |  0   |   1   |   2   |  3   |   .   |   =   |
 //                     |      |      |      |        |  |       |      |       |       | HELD |
+// BT1 is the Mac: it also turns the MAC layer on; BT2-5 turn it off. MAC toggles it by hand.
             bindings = <
 &trans &bt0    &bt1    &bt2   &bt3   &bt4                         &bt BT_CLR      &out OUT_TOG &rgb_ug RGB_TOG &rgb_ug RGB_BRD &rgb_ug RGB_BRI &tog MAC
 &trans &kp F1  &kp F2  &kp F3 &kp F4 &kp F5                       &kp KP_SLASH    &kp KP_N7    &kp KP_N8       &kp KP_N9       &kp KP_MINUS    &kp BSPC
@@ -163,18 +192,31 @@
         mac_layer {
             display-name = "MAC";
             /*
-             * Toggle with FN + MAC. Swaps the pinky Ctrl and thumb GUI so the
-             * bottom-left key is Cmd on macOS.
+             * On with Bluetooth profile 1. Left thumbs become Opt, Cmd (Apple order),
+             * so the inner thumb is Cmd: Cmd+Tab, Cmd+C/V, Cmd+-/+ sit where
+             * Alt+Tab, Ctrl+C/V, Ctrl+-/+ are muscle memory on the other hosts.
+             * Pinky stays Ctrl.
              * TODO: the Norwegian macOS layout uses different Option combos for
-             * @ $ { } [ ] | \ than Windows/Linux; add a mac SYM layer when the
-             * Mac profile is actually in use.
+             * @ $ { } [ ] | \ than Windows/Linux; add a mac SYM layer when needed.
              */
             bindings = <
-&trans   &trans &trans &trans   &trans &trans                        &trans &trans &trans &trans &trans &trans
-&trans   &trans &trans &trans   &trans &trans                        &trans &trans &trans &trans &trans &trans
-&trans   &trans &trans &trans   &trans &trans                        &trans &trans &trans &trans &trans &trans
-&kp LGUI &trans &trans &trans   &trans &trans &trans       &trans    &trans &trans &trans &trans &trans &trans
-                       &kp LCTRL &trans &trans &trans      &trans    &trans &trans &trans
+&trans &trans &trans &trans    &trans    &trans                        &trans &trans &trans &trans &trans &trans
+&trans &trans &trans &trans    &trans    &trans                        &trans &trans &trans &trans &trans &trans
+&trans &trans &trans &trans    &trans    &trans                        &trans &trans &trans &trans &trans &trans
+&trans &trans &trans &trans    &trans    &trans &trans       &trans    &trans &trans &trans &trans &trans &trans
+                     &kp LALT  &kp LGUI  &trans &trans       &trans    &trans &trans &trans
+            >;
+        };
+
+        mac_nav_layer {
+            display-name = "MACNAV";
+            /* NAV while MAC is on: Cmd/Opt versions of the OS-specific NAV keys, same positions as NAV. */
+            bindings = <
+&trans        &trans &trans       &trans        &trans &trans                                        &trans        &trans &trans &trans &trans &trans
+&kp LG(NB_LT) &trans &kp LA(BSPC) &kp LA(DEL)   &trans &trans                                        &trans        &trans &trans &trans &trans &trans
+&trans        &trans &trans       &trans        &trans &trans                                        &kp LG(NB_N0) &trans &trans &trans &trans &trans
+&trans        &trans &kp LA(LEFT) &kp LA(RIGHT) &trans &trans &kp LG(NB_PLUS) &kp LG(NB_MINUS)       &trans        &trans &trans &trans &trans &trans
+                                  &trans        &trans &trans &trans          &trans                 &trans        &trans &trans
             >;
         };
     };
