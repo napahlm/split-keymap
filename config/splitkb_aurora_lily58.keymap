@@ -8,6 +8,7 @@
  * Layers: 0 BASE  1 NAV  2 SYM  3 FN  4 MAC
  *
  * Visual map: docs/keymap.html
+ * The Keebio Iris rev7 (QMK) in qmk/ shares all layers except the thumb row.
  */
 
 #include <behaviors.dtsi>
@@ -109,17 +110,18 @@
         nav_layer {
             display-name = "NAV";
 // ------------------------------------------------------------------------------------------------------------
-// |       |     |     |      |      |      |                   |      |       |       |      |       | PRTSC |
-// |       |MUTE |VOL- | VOL+ | PLAY |      |                   | HOME | PGDN  | PGUP  | END  |  INS  |       |
-// |       | GUI | ALT | CTRL | SHFT |      |                   |  <-  |   v   |   ^   |  ->  |  DEL  |       |
-// |       |CAPSW|     |      |      |      |        |  |       |C+<-  | C+BSP | C+DEL | C+-> |       |       |
+// |       |     |     |      |      |      |                   |      |       |       |      |       |       |
+// |       | INS |C+BSP| C+DEL| PGUP | DEL  |                   | PLAY | VOL-  | VOL+  | MUTE | BRI-  | BRI+  |
+// |       | HOME|  <- |  ->  |  ^   | END  |                   |      |       |       |      |       |       |
+// |       |PRTSC| C+<-| C+-> |  v   | PGDN |        |  |       |      |       |       |      |       |       |
 //                     |      |      | HELD |        |  |       |      |       |       |
+// Arrows on the left hand so the right hand can stay on the mouse. Shift/Ctrl on the left pinky column pass through.
             bindings = <
-&trans &trans         &trans       &trans       &trans    &trans                       &trans       &trans       &trans      &trans        &trans  &kp PSCRN
-&trans &kp C_MUTE     &kp C_VOL_DN &kp C_VOL_UP &kp C_PP  &trans                       &kp HOME     &kp PG_DN    &kp PG_UP   &kp END       &kp INS &trans
-&trans &kp LGUI       &kp LALT     &kp LCTRL    &kp LSHFT &trans                       &kp LEFT     &kp DOWN     &kp UP      &kp RIGHT     &kp DEL &trans
-&trans &caps_word     &trans       &trans       &trans    &trans  &trans      &trans   &kp LC(LEFT) &kp LC(BSPC) &kp LC(DEL) &kp LC(RIGHT) &trans  &trans
-                                   &trans       &trans    &trans  &trans      &trans   &trans       &trans       &trans
+&trans &trans    &trans       &trans        &trans    &trans                       &trans   &trans       &trans       &trans     &trans       &trans
+&trans &kp INS   &kp LC(BSPC) &kp LC(DEL)   &kp PG_UP &kp DEL                      &kp C_PP &kp C_VOL_DN &kp C_VOL_UP &kp C_MUTE &kp C_BRI_DN &kp C_BRI_UP
+&trans &kp HOME  &kp LEFT     &kp RIGHT     &kp UP    &kp END                      &trans   &trans       &trans       &trans     &trans       &trans
+&trans &kp PSCRN &kp LC(LEFT) &kp LC(RIGHT) &kp DOWN  &kp PG_DN &trans    &trans   &trans   &trans       &trans       &trans     &trans       &trans
+                              &trans        &trans    &trans    &trans    &trans   &trans   &trans       &trans
             >;
         };
 
@@ -128,15 +130,16 @@
 // ------------------------------------------------------------------------------------------------------------
 // |       |     |     |      |      |      |                   |      |       |       |      |       |       |
 // |       |  ~  |  <  |  >   |  $   |  %   |                   |  ^   |   @   |   #   |  !   |   ?   |   Å   |
-// |       |  |  |  (  |  )   |  {   |  }   |                   |  =   |   "   |   +   |  :   |   Ø   |   Æ   |
-// |       |  \  |  [  |  ]   |  &   |  *   |        |  |       |  _   |   `   |   €   |      |       |       |
+// |       |  |  |  (  |  )   |  {   |  }   |                   |  "   |   -   |   _   |  =   |   Ø   |   Æ   |
+// |       |  \  |  [  |  ]   |  &   |  *   |        |  |       |  +   |   `   |       |      |   €   |       |
 //                     |      |      |      |        |  |       | HELD |       |       |
+// Right home row carries the symbols typed most: - _ = under index, middle, ring; " on the inner reach.
             bindings = <
-&trans &trans      &trans      &trans      &trans      &trans                           &trans       &trans     &trans      &trans       &trans         &trans
-&trans &no_tilde   &kp NB_LT   &kp NB_GT   &kp NB_DLLR &kp NB_PRCNT                     &no_caret    &kp NB_AT  &kp NB_HASH &kp NB_EXCL  &kp NB_QMARK   &kp NB_A_RING
-&trans &kp NB_PIPE &kp NB_LPAR &kp NB_RPAR &kp NB_LBRC &kp NB_RBRC                      &kp NB_EQUAL &kp NB_DQT &kp NB_PLUS &kp NB_COLON &kp NB_O_SLASH &kp NB_AE
-&trans &kp NB_BSLH &kp NB_LBKT &kp NB_RBKT &kp NB_AMPS &kp NB_ASTRK &trans     &trans   &kp NB_UNDER &no_grave  &kp NB_EURO &trans       &trans         &trans
-                               &trans      &trans      &trans       &trans     &trans   &trans       &trans     &trans
+&trans &trans      &trans      &trans      &trans      &trans                           &trans      &trans       &trans       &trans       &trans         &trans
+&trans &no_tilde   &kp NB_LT   &kp NB_GT   &kp NB_DLLR &kp NB_PRCNT                     &no_caret   &kp NB_AT    &kp NB_HASH  &kp NB_EXCL  &kp NB_QMARK   &kp NB_A_RING
+&trans &kp NB_PIPE &kp NB_LPAR &kp NB_RPAR &kp NB_LBRC &kp NB_RBRC                      &kp NB_DQT  &kp NB_MINUS &kp NB_UNDER &kp NB_EQUAL &kp NB_O_SLASH &kp NB_AE
+&trans &kp NB_BSLH &kp NB_LBKT &kp NB_RBKT &kp NB_AMPS &kp NB_ASTRK &trans     &trans   &kp NB_PLUS &no_grave    &trans       &trans       &kp NB_EURO    &trans
+                               &trans      &trans      &trans       &trans     &trans   &trans      &trans       &trans
             >;
         };
 

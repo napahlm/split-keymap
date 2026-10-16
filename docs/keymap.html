@@ -1,8 +1,8 @@
-<title>Lily58 Dev Keymap</title>
+<title>Split Keymap</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
 <style>
-/* Layout: one column, keyboard halves side by side on wide screens and stacked on phones; layer tabs above, notes below. */
+/* Layout: one column; board switch, then layer tabs, keyboard halves side by side (stacked on phones), notes below. */
 :root{
   --bg:#f3f4f2; --panel:#ffffff; --fg:#1d2320; --muted:#5d6a63; --line:#d6dbd7;
   --accent:#187a73; --accent-ink:#ffffff;
@@ -54,7 +54,8 @@ header p{margin:0;color:var(--muted);max-width:62ch}
 .spec{display:flex;flex-wrap:wrap;gap:8px 18px;margin-top:10px;font-family:var(--mono);font-size:.78rem;color:var(--muted)}
 .spec b{color:var(--fg);font-weight:600}
 
-.tabs{display:flex;gap:6px;flex-wrap:wrap}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.tabs .lbl{font-size:.75rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-right:4px}
 .tab{font:600 .85rem var(--mono);padding:8px 14px;border:1px solid var(--line);background:var(--panel);color:var(--fg);border-radius:8px;cursor:pointer}
 .tab[aria-selected="true"]{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
 .tab:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
@@ -94,12 +95,13 @@ th{font-weight:600;font-size:.78rem;letter-spacing:.04em;text-transform:uppercas
 
 <div class="wrap">
 <header>
-  <h1>Lily58 Dev Keymap</h1>
-  <p>Four layers for shell-heavy work on an Aurora Lily58 running ZMK. Plain QWERTY on BASE, æøå on a layer, underglow colour per Bluetooth host. The OS stays on the Norwegian layout; the firmware emits the right scancodes so every symbol sits where the map says.</p>
-  <div class="spec"><span><b>Board</b> Aurora Lily58, nice!nano v2</span><span><b>Firmware</b> ZMK + zmk-locales <code>keys_no.h</code></span><span><b>OS layout</b> Norwegian (all hosts)</span><span><b>Layers</b> BASE · NAV · SYM · FN</span></div>
+  <h1>Split Keymap</h1>
+  <p>One keymap for two split boards: the wireless Aurora Lily58 (ZMK) and the wired Keebio Iris rev7 (QMK). BASE, NAV, SYM and FN are identical on the main block; only the thumb row differs because the Iris has three thumb keys per half instead of four. The OS stays on the Norwegian layout on every host.</p>
+  <div class="spec" id="spec"></div>
 </header>
 
-<div role="tablist" class="tabs" id="tabs"></div>
+<div role="tablist" class="tabs" id="boardtabs"><span class="lbl">Board</span></div>
+<div role="tablist" class="tabs" id="tabs"><span class="lbl">Layer</span></div>
 <p class="hint" id="hint"></p>
 
 <div class="board" id="board">
@@ -115,7 +117,7 @@ th{font-weight:600;font-size:.78rem;letter-spacing:.04em;text-transform:uppercas
   <span><i style="background:var(--k-fn)"></i>F-keys</span>
   <span><i style="background:var(--k-mod)"></i>modifier</span>
   <span><i style="background:var(--k-layer)"></i>layer (hold)</span>
-  <span><i style="background:var(--k-bt)"></i>bluetooth / host</span>
+  <span><i style="background:var(--k-bt)"></i>bluetooth / RGB / host</span>
   <span><i style="background:var(--k-media)"></i>media</span>
   <span><i style="background:var(--k-alpha);opacity:.35"></i>falls through to BASE</span>
 </div>
@@ -133,37 +135,37 @@ th{font-weight:600;font-size:.78rem;letter-spacing:.04em;text-transform:uppercas
       <tr><td>æ ø å</td><td>Hacks differ per OS</td><td class="win">Plain keys</td></tr>
       <tr><td>Brackets, <code>$</code>, <code>|</code>, <code>\</code></td><td class="win">Single scancodes</td><td>AltGr combos, hidden inside the locale header</td></tr>
     </table></div>
-    <p style="margin-top:8px">Your constraint is "many hosts, switch a lot", so zero per-host setup wins. The dead-key cost is three macros you never notice.</p>
+    <p style="margin-top:8px">Many hosts, switched often, so zero per-host setup wins. The dead-key cost is three macros you never notice.</p>
   </div>
   <div class="card">
     <h3>Where the shell characters live</h3>
     <ul>
-      <li><code>-</code> <code>=</code> <code>/</code> <code>.</code> <code>,</code> <code>;</code> <code>'</code> on BASE; Shift gives <code>_</code> <code>:</code> <code>*</code> for free on the Norwegian layout.</li>
-      <li>SYM, held by the right thumb: brackets as pairs under ring + middle finger on the left hand, one pair per row; <code>$</code> <code>|</code> <code>\</code> <code>~</code> <code>&amp;</code> <code>*</code> beside them.</li>
-      <li>Right hand on SYM: <code>=</code> <code>"</code> <code>+</code> <code>:</code> on the home row, <code>!</code> <code>?</code> <code>@</code> <code>#</code> <code>^</code> above, <code>_</code> <code>`</code> <code>€</code> below, Æ Ø Å at their Norwegian spots.</li>
-      <li>PowerShell: <code>$</code> is left ring on the home row of SYM, <code>|</code> under the left pinky home, <code>\</code> under the left pinky one row down.</li>
+      <li><code>/</code> <code>.</code> <code>,</code> <code>;</code> <code>'</code> on BASE; Shift gives <code>_</code> <code>:</code> <code>*</code> for free on the Norwegian layout. The Lily58 also has <code>=</code> and <code>-</code> on its inner keys.</li>
+      <li>SYM right home row, the best spots: <code>"</code> on H, <code>-</code> on J, <code>_</code> on K, <code>=</code> on L. Ø and Æ stay on the pinky side where a Norwegian keyboard has them, Å right of P.</li>
+      <li>SYM left hand: brackets as pairs under ring + middle, one pair per row: <code>&lt; &gt;</code>, <code>( )</code>, <code>[ ]</code>, with <code>{ }</code> right of <code>( )</code>; <code>~</code> <code>|</code> <code>\</code> on the index-reach column, <code>$ %</code> and <code>&amp; *</code> on the inner columns.</li>
+      <li><code>€</code> is pushed out to the bottom-row ring finger; <code>+</code> and <code>`</code> sit under N and M.</li>
     </ul>
   </div>
   <div class="card">
-    <h3>Arrows</h3>
-    <p>HJKL on NAV, held by the left thumb. Home / PgDn / PgUp / End on the row above, word-jump and word-delete on the row below. Left hand gets Shift / Ctrl / Alt / GUI on its home row while NAV is held, so selection and word jumps are one-handed per side.</p>
+    <h3>Arrows on the left hand</h3>
+    <p>NAV is held by the left thumb and the same hand steers: <code>S</code> left, <code>D</code> right, <code>F</code> up, <code>V</code> down, so the right hand can stay on the mouse. Home and End on A and G bracket the arrows, PgUp above the up arrow on R, PgDn beside the down arrow on B, word-jump under left/right on X and C, word-delete on W and E. Shift and Ctrl on the left pinky column pass through, so select-word and jump-word need no extra layer.</p>
   </div>
   <div class="card">
-    <h3>Switching between PCs</h3>
-    <p>Hold FN (right outer thumb) and press <code>1</code> to <code>5</code> on the left number row. Each key is a ZMK macro: <code>&amp;bt BT_SEL n</code> followed by <code>&amp;rgb_ug RGB_COLOR_HSB(hue,100,20)</code>, so the underglow colour tells you which host you are on before you type. The nice!view shows the profile number as well.</p>
-    <p style="margin-top:6px">Pair one profile per host (Debian test laptops, corporate Windows, Mac). Keep profile 5 for the odd one. ZMK has no built-in profile-to-colour link; the macro is the way to get it, and it survives reboots because RGB state is saved to flash.</p>
+    <h3>Thumb rows</h3>
+    <p><b>Lily58</b> (4 per half): GUI, Alt, NAV, Space / Enter, SYM, Backspace, FN. Inner row-4 keys carry <code>=</code> and <code>-</code>.</p>
+    <p style="margin-top:6px"><b>Iris</b> (3 per half): GUI, NAV, Space / Enter, SYM, FN. Alt moves to the left inner row-4 key where it was before; the right inner key gets <code>-</code>, the most typed shell symbol. The extra thumb Backspace is gone; Backspace is top-right as on a normal keyboard.</p>
+  </div>
+  <div class="card">
+    <h3>Switching hosts (Lily58 only)</h3>
+    <p>Hold FN and press <code>1</code> to <code>5</code>. Each key is a ZMK macro: <code>&amp;bt BT_SEL n</code> then <code>&amp;rgb_ug RGB_COLOR_HSB(hue,100,20)</code>, so the underglow colour says which host is active: red, green, blue, yellow, purple. The Iris is wired, so its FN top row controls RGB instead.</p>
   </div>
   <div class="card">
     <h3>macOS</h3>
-    <p>The Norwegian Mac layout puts brackets and <code>@</code> on different Option combos, and swaps Cmd for Ctrl. The <code>MAC</code> key on FN toggles a variant of BASE and SYM for that host. Not drawn here; build it when the Mac profile goes in.</p>
+    <p>FN + MAC toggles a layer that swaps Ctrl and Cmd on the bottom-left and thumb. The Norwegian Mac layout uses different Option combos for brackets and <code>@</code>; a Mac variant of SYM is a TODO for when the Mac profile is in use.</p>
   </div>
   <div class="card">
-    <h3>Optional: home-row mods</h3>
-    <p>Not in this map. Ctrl and Shift stay physical on the left pinky column, which matters for Ctrl+C / Ctrl+R / Ctrl+L. If you later want fewer pinky reaches, add Miryoku-style home-row mods on BASE and keep this NAV/SYM/FN structure unchanged.</p>
-  </div>
-  <div class="card">
-    <h3>From the Iris</h3>
-    <p>Same alpha block, one more thumb key per side. Your old three layers map onto NAV and SYM plus FN; the extra thumb key is what makes FN a dedicated hold instead of a double-thumb chord. Both shifts held together is Caps Word for <code>ENV_VARS</code>.</p>
+    <h3>Firmware</h3>
+    <p>Lily58: ZMK, <code>config/</code>, locale header <code>keys_nb.h</code>, flashed as <code>.uf2</code> onto the NICENANO drive. Iris rev7: QMK, <code>qmk/keebio_iris/</code>, <code>keymap_norwegian.h</code>, flashed as <code>.hex</code> with QMK Toolbox (ATmega32U4, Atmel DFU bootloader). Both from <code>napahlm/split-keymap</code>.</p>
   </div>
 </div>
 </div>
@@ -172,102 +174,111 @@ th{font-weight:600;font-size:.78rem;letter-spacing:.04em;text-transform:uppercas
 (function(){
 const U=60, PAD=4, W=7.4*U, H=5.9*U;
 const stag=[0.5,0.5,0.125,0,0.125,0.25];
-// Left half geometry: cols 0..5 (outer to inner), inner key, 4 thumb keys outer to inner.
-const leftKeys=[];
-for(let r=0;r<4;r++) for(let c=0;c<6;c++) leftKeys.push({id:'r'+r+'c'+c,x:c,y:r+stag[c],rot:0});
-leftKeys.push({id:'inner',x:6.0,y:2.75,rot:0});
-[[2.55,4.3,0],[3.6,4.3,0],[4.7,4.42,14],[5.78,4.75,28]].forEach((t,i)=>leftKeys.push({id:'t'+i,x:t[0],y:t[1],rot:t[2]}));
+function mainBlock(){const k=[];for(let r=0;r<4;r++)for(let c=0;c<6;c++)k.push({id:'r'+r+'c'+c,x:c,y:r+stag[c],rot:0});return k;}
+// Lily58: inner key + 4 thumbs. Iris: inner key + 3 thumbs.
+const geo={
+  lily58: mainBlock().concat([{id:'inner',x:6.0,y:2.75,rot:0}],[[2.55,4.3,0],[3.6,4.3,0],[4.7,4.42,14],[5.78,4.75,28]].map((t,i)=>({id:'t'+i,x:t[0],y:t[1],rot:t[2]}))),
+  iris:   mainBlock().concat([{id:'inner',x:6.1,y:3.0,rot:0}],[[3.5,4.3,0],[4.55,4.42,12],[5.65,4.75,26]].map((t,i)=>({id:'t'+i,x:t[0],y:t[1],rot:t[2]})))
+};
 const mirror=k=>({id:k.id,x:(W/U)-k.x-1,y:k.y,rot:-k.rot});
-const rightKeys=leftKeys.map(mirror);
 
-// Key spec: [label, category, subLabel?, holdLabel?]; null = transparent (falls through to BASE)
 const A='alpha',S='sym',N='nav',M='mod',L='layer',B='bt',NUM='num',F='fn',MD='media';
-const base={
+const _=null;
+// Main block, identical on both boards. Rows are left→right as seen from above on both halves.
+const baseMain={
  left:[
   [['ESC',M],['1',A,'!'],['2',A,'"'],['3',A,'#'],['4',A,'¤'],['5',A,'%']],
   [['TAB',M],['Q',A],['W',A],['E',A],['R',A],['T',A]],
   [['SHIFT',M],['A',A],['S',A],['D',A],['F',A],['G',A]],
   [['CTRL',M],['Z',A],['X',A],['C',A],['V',A],['B',A]] ],
- innerL:['=',S],
- thumbsL:[['GUI',M],['ALT',M],['NAV',L,'','hold'],['SPACE',M]],
  right:[
   [['6',A,'&'],['7',A,'/'],['8',A,'('],['9',A,')'],['0',A,'='],['BSPC',M]],
   [['Y',A],['U',A],['I',A],['O',A],['P',A],['DEL',M]],
   [['H',A],['J',A],['K',A],['L',A],[';',S],["'",S,'*']],
-  [['N',A],['M',A],[',',S],['.',S,':'],['/',S],['SHIFT',M]] ],
- innerR:['-',S,'_'],
- thumbsR:[['ENTER',M],['SYM',L,'','hold'],['BSPC',M],['FN',L,'','hold']]
+  [['N',A],['M',A],[',',S],['.',S,':'],['/',S],['SHIFT',M]] ]
 };
-const _=null;
-const nav={
+const navMain={
  left:[
   [_,_,_,_,_,_],
-  [_,['MUTE',MD],['VOL−',MD],['VOL+',MD],['PLAY',MD],_],
-  [_,['GUI',M],['ALT',M],['CTRL',M],['SHIFT',M],_],
-  [_,['CAPS WORD',M],_,_,_,_] ],
- innerL:_,
- thumbsL:[_,_,['NAV',L,'','held'],_],
+  [_,['INS',N],['⌃⌫',N,'','word'],['⌃DEL',N,'','word'],['PGUP',N],['DEL',N]],
+  [_,['HOME',N],['←',N],['→',N],['↑',N],['END',N]],
+  [_,['PRTSC',N],['⌃←',N,'','word'],['⌃→',N,'','word'],['↓',N],['PGDN',N]] ],
  right:[
-  [_,_,_,_,_,['PRTSC',N]],
-  [['HOME',N],['PGDN',N],['PGUP',N],['END',N],['INS',N],_],
-  [['←',N],['↓',N],['↑',N],['→',N],['DEL',N],_],
-  [['⌃←',N,'','word'],['⌃⌫',N,'','word'],['⌃DEL',N,'','word'],['⌃→',N,'','word'],_,_] ],
- innerR:_,
- thumbsR:[_,_,_,_]
+  [_,_,_,_,_,_],
+  [['PLAY',MD],['VOL−',MD],['VOL+',MD],['MUTE',MD],['BRI−',MD],['BRI+',MD]],
+  [_,_,_,_,_,_],
+  [_,_,_,_,_,_] ]
 };
-const sym={
+const symMain={
  left:[
   [_,_,_,_,_,_],
   [_,['~',S],['<',S],['>',S],['$',S],['%',S]],
   [_,['|',S],['(',S],[')',S],['{',S],['}',S]],
   [_,['\\',S],['[',S],[']',S],['&',S],['*',S]] ],
- innerL:_,
- thumbsL:[_,_,_,_],
  right:[
   [_,_,_,_,_,_],
   [['^',S],['@',S],['#',S],['!',S],['?',S],['Å',A]],
-  [['=',S],['"',S],['+',S],[':',S],['Ø',A],['Æ',A]],
-  [['_',S],['`',S],['€',S],_,_,_] ],
- innerR:_,
- thumbsR:[_,['SYM',L,'','held'],_,_]
+  [['"',S],['-',S],['_',S],['=',S],['Ø',A],['Æ',A]],
+  [['+',S],['`',S],_,_,['€',S],_] ]
 };
-const fn={
- left:[
-  [_,['BT 1',B,'red','host'],['BT 2',B,'grn','host'],['BT 3',B,'blue','host'],['BT 4',B,'yel','host'],['BT 5',B,'pur','host']],
+const fnLeftRows=[
   [_,['F1',F],['F2',F],['F3',F],['F4',F],['F5',F]],
   [_,['F6',F],['F7',F],['F8',F],['F9',F],['F10',F]],
-  [_,['F11',F],['F12',F],_,_,_] ],
- innerL:_,
- thumbsL:[_,_,_,_],
- right:[
-  [['BT CLR',B],['USB/BT',B],['LED',B,'','on/off'],['LED −',B,'','dim'],['LED +',B,'','bright'],['MAC',B,'','toggle']],
+  [_,['F11',F],['F12',F],_,_,_] ];
+const fnRightRows=[
   [['/',NUM],['7',NUM],['8',NUM],['9',NUM],['-',NUM],['BSPC',M]],
   [['*',NUM],['4',NUM],['5',NUM],['6',NUM],['+',NUM],['ENTER',M]],
-  [['0',NUM],['1',NUM],['2',NUM],['3',NUM],['.',NUM],['=',NUM]] ],
- innerR:_,
- thumbsR:[_,_,_,['FN',L,'','held']]
+  [['0',NUM],['1',NUM],['2',NUM],['3',NUM],['.',NUM],['=',NUM]] ];
+const fnMain={
+ lily58:{ left:[[_,['BT 1',B,'red','host'],['BT 2',B,'grn','host'],['BT 3',B,'blue','host'],['BT 4',B,'yel','host'],['BT 5',B,'pur','host']]].concat(fnLeftRows),
+          right:[[['BT CLR',B],['USB/BT',B],['LED',B,'','on/off'],['LED −',B,'','dim'],['LED +',B,'','bright'],['MAC',B,'','toggle']]].concat(fnRightRows)},
+ iris:  { left:[[_,['RGB',B,'','on/off'],['MODE',B],['HUE+',B],['SAT+',B],['BRI+',B]]].concat(fnLeftRows),
+          right:[[_,_,_,_,_,['MAC',B,'','toggle']]].concat(fnRightRows)}
 };
-
+// Thumb rows and inner keys, per board. Thumbs listed from the centre outward on both halves.
+const edges={
+ lily58:{
+  BASE:{innerL:['=',S],innerR:['-',S,'_'],thumbsL:[['GUI',M],['ALT',M],['NAV',L,'','hold'],['SPACE',M]],thumbsR:[['ENTER',M],['SYM',L,'','hold'],['BSPC',M],['FN',L,'','hold']]},
+  NAV:{innerL:_,innerR:_,thumbsL:[_,_,['NAV',L,'','held'],_],thumbsR:[_,_,_,_]},
+  SYM:{innerL:_,innerR:_,thumbsL:[_,_,_,_],thumbsR:[_,['SYM',L,'','held'],_,_]},
+  FN:{innerL:_,innerR:_,thumbsL:[_,_,_,_],thumbsR:[_,_,_,['FN',L,'','held']]} },
+ iris:{
+  BASE:{innerL:['ALT',M],innerR:['-',S,'_'],thumbsL:[['GUI',M],['NAV',L,'','hold'],['SPACE',M]],thumbsR:[['ENTER',M],['SYM',L,'','hold'],['FN',L,'','hold']]},
+  NAV:{innerL:_,innerR:_,thumbsL:[_,['NAV',L,'','held'],_],thumbsR:[_,_,_]},
+  SYM:{innerL:_,innerR:_,thumbsL:[_,_,_],thumbsR:[_,['SYM',L,'','held'],_]},
+  FN:{innerL:_,innerR:_,thumbsL:[_,_,_],thumbsR:[_,_,['FN',L,'','held']]} }
+};
+const boards={
+ lily58:{name:'Lily58',spec:[['Board','Aurora Lily58, nice!nano v2, nice!view'],['Firmware','ZMK + zmk-locales keys_nb.h'],['Link','Bluetooth, 5 host profiles'],['Keys','58']]},
+ iris:{name:'Iris rev7',spec:[['Board','Keebio Iris rev7, ATmega32U4'],['Firmware','QMK + keymap_norwegian.h'],['Link','USB wired'],['Keys','56']]}
+};
 const layers=[
- {name:'BASE',data:base,hint:'Always active. Plain QWERTY alphas and number row, ; and \' where QWERTY puts them. Shift on the Norwegian layout adds _ : * on the keys shown.',
-  notes:[['Thumbs','Left: GUI, Alt, NAV (hold), Space. Right: Enter, SYM (hold), Backspace, FN (hold only).'],
-         ['Pinky columns','Left: Esc, Tab, Shift, Ctrl. Right: Backspace, Delete, apostrophe, Shift. Backspace and Delete stack top-right; the thumb Backspace is a duplicate for speed.'],
-         ['Inner keys','= on the left index reach, - on the right. Both fall off a normal 58-key count, and they are the two most typed symbols that are not already on the main block.']]},
- {name:'NAV',data:nav,hint:'Hold the left thumb. Right hand navigates, left hand holds modifiers so Shift+arrow and Ctrl+arrow are one hand each.',
-  notes:[['Arrows','H J K L = ← ↓ ↑ →, the vim order. Works in every app, not only vim.'],
-         ['Above and below','Home / PgDn / PgUp / End above the arrows, word-left / delete word / forward-delete word / word-right below.'],
-         ['Left hand','GUI Alt Ctrl Shift on A S D F while held; Caps Word on Z; media on the top row.']]},
- {name:'SYM',data:sym,hint:'Hold the right thumb. Pairs line up under the same two fingers on every row: < >, ( ), [ ] on ring + middle, with { } to the right of ( ).',
-  notes:[['Left hand','Row by row: ~ < > $ %  /  | ( ) { }  /  \\ [ ] & *. Shell-critical ones sit on the home row.'],
-         ['Right hand','= " + : on the home row, ^ @ # ! ? above, _ ` € below.'],
-         ['Æ Ø Å','SYM + the key where they sit on a Norwegian keyboard: Å right of P, Ø right of L, Æ right of Ø. Muscle memory from any Norwegian laptop carries over.'],
-         ['Digits','Number row falls through, so SYM + 7 still types 7. Useful for $1, ${2}, [0].']]},
- {name:'FN',data:fn,hint:'Hold the right outer thumb. Numpad under the right hand, F-keys under the left, Bluetooth hosts on the number row.',
-  notes:[['Hosts','FN + 1..5 is one macro each: select the Bluetooth profile and set the underglow to that profile\'s colour (red, green, blue, yellow, purple). BT CLR forgets the current profile, USB/BT switches output when cabled.'],
-         ['LEDs','LED toggles underglow, LED − / LED + change brightness. Underglow is the biggest battery cost on a nice!nano, so keep it dim or off between host switches.'],
-         ['Numpad','7 8 9 / 4 5 6 / 1 2 3 under U I O, J K L, M , . with 0 on N. Operators on the outer columns, Enter and = on the pinky column.'],
-         ['Mac','MAC toggles the macOS variant of BASE and SYM (Cmd/Ctrl swap, Option combos for brackets).']]}
+ {name:'BASE',hint:'Always active. Plain QWERTY alphas and number row, ; and \' where QWERTY puts them. Shift on the Norwegian layout adds _ : * on the keys shown.',
+  notes:{lily58:[['Thumbs','Left: GUI, Alt, NAV (hold), Space. Right: Enter, SYM (hold), Backspace, FN (hold).'],
+                 ['Pinky columns','Left: Esc, Tab, Shift, Ctrl. Right: Backspace, Delete, apostrophe, Shift.'],
+                 ['Inner keys','= on the left index reach, - on the right; direct access to the two most typed symbols that are not on the main block.']],
+         iris:[['Thumbs','Left: GUI, NAV (hold), Space. Right: Enter, SYM (hold), FN (hold). No thumb Backspace; it is top-right.'],
+               ['Pinky columns','Left: Esc, Tab, Shift, Ctrl. Right: Backspace, Delete, apostrophe, Shift.'],
+               ['Inner keys','Alt on the left inner key, where it was on the old Iris map. - on the right inner key as a bonus; it is also on SYM + J.']]}},
+ {name:'NAV',hint:'Hold the left thumb. Same hand steers: S D F V are left, right, up, down; the right hand stays on the mouse.',
+  notes:{all:[['Arrows','S ← , D → , F ↑ , V ↓ under the left thumb hold. Home on A, End on G.'],
+              ['Pages and words','PgUp above the up arrow on R, PgDn beside the down arrow on B. Word left/right under the arrows on X and C, delete word back/forward on W and E, Insert on Q, Del on T, PrtSc on Z.'],
+              ['Modifiers','Shift and Ctrl on the left pinky column pass through: Shift + NAV + S selects left, Ctrl + NAV + D jumps a word.'],
+              ['Right hand','Media: play, volume, mute, brightness on the top letter row.']]}},
+ {name:'SYM',hint:'Hold the right thumb. Right home row carries the symbols typed most; left hand has the bracket pairs under ring + middle, one pair per row.',
+  notes:{all:[['Right home row','" on H, - on J, _ on K, = on L, then Ø and Æ where a Norwegian keyboard has them. Å right of P.'],
+              ['Right hand, other rows','^ @ # ! ? above, + and ` under N and M, € pushed out to the bottom-row ring finger.'],
+              ['Left hand','Row by row: ~ < > $ %  /  | ( ) { }  /  \\ [ ] & *.'],
+              ['Digits','Number row falls through, so SYM + 7 still types 7. Useful for $1, ${2}, [0].']]}},
+ {name:'FN',hint:'Hold the right outer thumb. Numpad under the right hand, F-keys under the left.',
+  notes:{lily58:[['Hosts','FN + 1..5 is one macro each: select the Bluetooth profile and set the underglow to that profile\'s colour (red, green, blue, yellow, purple). BT CLR forgets the current profile, USB/BT switches output when cabled.'],
+                 ['LEDs','LED toggles underglow, LED − / LED + change brightness.'],
+                 ['Numpad','7 8 9 / 4 5 6 / 1 2 3 under U I O, J K L, M , . with 0 on N. Operators on the outer columns.']],
+         iris:[['RGB','Wired board, so no host profiles. Top row: RGB on/off, next mode, hue, saturation, brightness.'],
+               ['Numpad','7 8 9 / 4 5 6 / 1 2 3 under U I O, J K L, M , . with 0 on N. Operators on the outer columns.'],
+               ['Mac','MAC toggles the macOS variant (Cmd on bottom-left pinky, Ctrl on the left thumb).']]}}
 ];
+const mains={BASE:()=>baseMain,NAV:()=>navMain,SYM:()=>symMain,FN:b=>fnMain[b]};
 
 function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
 function keySVG(g,spec,ghost){
@@ -276,23 +287,21 @@ function keySVG(g,spec,ghost){
   const len=label.length;
   const fs=len<=2?22:len<=4?12.5:len<=6?10.5:8.5;
   const held=hold==='held';
-  const tf=`transform="rotate(${g.rot} ${cx} ${cy})"`;
-  let out=`<g class="${ghost?'ghost':''}" ${tf}><rect class="k k-${cat} ${held?'held':''}" x="${x}" y="${y}" width="${s}" height="${s}" rx="7"/>`;
+  let out=`<g class="${ghost?'ghost':''}" transform="rotate(${g.rot} ${cx} ${cy})"><rect class="k k-${cat} ${held?'held':''}" x="${x}" y="${y}" width="${s}" height="${s}" rx="7"/>`;
   out+=`<text class="t t-${cat}" x="${cx}" y="${cy+(hold?-3:0)}" font-size="${fs}">${esc(label)}</text>`;
   if(sub) out+=`<text class="t t-${cat} sub" x="${x+s-5}" y="${y+9}" font-size="10">${esc(sub)}</text>`;
   if(hold) out+=`<text class="t t-${cat} hold" x="${cx}" y="${y+s-9}" font-size="8">${esc(hold)}</text>`;
   return out+'</g>';
 }
-function flatten(d){
-  const o={};
-  // Left data is outer→inner, right data is inner→outer; geometry ids are mirrored (R c0 = outer), so flip the right side.
-  for(let r=0;r<4;r++) for(let c=0;c<6;c++){o['L'+'r'+r+'c'+c]=d.left[r][c]; o['R'+'r'+r+'c'+c]=d.right[r][5-c];}
-  o['Linner']=d.innerL; o['Rinner']=d.innerR;
-  for(let i=0;i<4;i++){o['Lt'+i]=d.thumbsL[i]; o['Rt'+i]=d.thumbsR[3-i];}
+function flatten(board,main,edge){
+  const o={}, nT=edge.thumbsL.length;
+  // Left data is outer→inner, right data is inner→outer; right geometry ids are mirrored (c0 = outer), so flip the right side.
+  for(let r=0;r<4;r++) for(let c=0;c<6;c++){o['Lr'+r+'c'+c]=main.left[r][c]; o['Rr'+r+'c'+c]=main.right[r][5-c];}
+  o['Linner']=edge.innerL; o['Rinner']=edge.innerR;
+  for(let i=0;i<nT;i++){o['Lt'+i]=edge.thumbsL[i]; o['Rt'+i]=edge.thumbsR[nT-1-i];}
   return o;
 }
-const baseFlat=flatten(base);
-function renderHalf(side,keys,flat){
+function renderHalf(side,keys,flat,baseFlat){
   let svg=`<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="${side==='L'?'Left':'Right'} half">`;
   for(const g of keys){
     const spec=flat[side+g.id];
@@ -300,24 +309,34 @@ function renderHalf(side,keys,flat){
   }
   return svg+'</svg>';
 }
-const tabs=document.getElementById('tabs'), hint=document.getElementById('hint'), notes=document.getElementById('notes');
-let current=0;
-try{const s=localStorage.getItem('lily58-layer'); if(s!==null&&layers[+s]) current=+s;}catch(e){}
-if(/^#(base|nav|sym|fn)$/i.test(location.hash)){const i=layers.findIndex(l=>l.name.toLowerCase()===location.hash.slice(1).toLowerCase()); if(i>=0) current=i;}
-function show(i){
-  current=i;
-  const L=layers[i], flat=flatten(L.data);
-  document.getElementById('left').innerHTML=renderHalf('L',leftKeys,flat);
-  document.getElementById('right').innerHTML=renderHalf('R',rightKeys,flat);
-  hint.textContent=L.hint;
-  notes.innerHTML=L.notes.map(n=>`<div class="card"><h3>${esc(n[0])}</h3><p>${esc(n[1])}</p></div>`).join('');
-  [...tabs.children].forEach((t,j)=>t.setAttribute('aria-selected',j===i?'true':'false'));
-  try{localStorage.setItem('lily58-layer',String(i));}catch(e){}
+const tabs=document.getElementById('tabs'), btabs=document.getElementById('boardtabs'), hint=document.getElementById('hint'), notes=document.getElementById('notes'), specEl=document.getElementById('spec');
+let curL=0, curB='lily58';
+try{const s=localStorage.getItem('split-keymap-layer'); if(s!==null&&layers[+s]) curL=+s; const b=localStorage.getItem('split-keymap-board'); if(b&&boards[b]) curB=b;}catch(e){}
+const h=location.hash.slice(1).toLowerCase();
+if(boards[h]) curB=h;
+{const i=layers.findIndex(l=>l.name.toLowerCase()===h); if(i>=0) curL=i;}
+function show(){
+  const Lr=layers[curL], main=mains[Lr.name](curB), edge=edges[curB][Lr.name];
+  const flat=flatten(curB,main,edge), baseFlat=flatten(curB,baseMain,edges[curB].BASE);
+  const leftKeys=geo[curB], rightKeys=leftKeys.map(mirror);
+  document.getElementById('left').innerHTML=renderHalf('L',leftKeys,flat,baseFlat);
+  document.getElementById('right').innerHTML=renderHalf('R',rightKeys,flat,baseFlat);
+  hint.textContent=Lr.hint;
+  const ns=Lr.notes.all||Lr.notes[curB];
+  notes.innerHTML=ns.map(n=>`<div class="card"><h3>${esc(n[0])}</h3><p>${esc(n[1])}</p></div>`).join('');
+  specEl.innerHTML=boards[curB].spec.map(s=>`<span><b>${esc(s[0])}</b> ${esc(s[1])}</span>`).join('');
+  [...tabs.querySelectorAll('.tab')].forEach((t,j)=>t.setAttribute('aria-selected',j===curL?'true':'false'));
+  [...btabs.querySelectorAll('.tab')].forEach(t=>t.setAttribute('aria-selected',t.dataset.b===curB?'true':'false'));
+  try{localStorage.setItem('split-keymap-layer',String(curL));localStorage.setItem('split-keymap-board',curB);}catch(e){}
 }
-layers.forEach((L,i)=>{
-  const b=document.createElement('button'); b.className='tab'; b.id='tab-'+L.name.toLowerCase(); b.setAttribute('role','tab'); b.textContent=L.name;
-  b.addEventListener('click',()=>show(i)); tabs.appendChild(b);
+Object.keys(boards).forEach(b=>{
+  const el=document.createElement('button'); el.className='tab'; el.id='board-'+b; el.dataset.b=b; el.setAttribute('role','tab'); el.textContent=boards[b].name;
+  el.addEventListener('click',()=>{curB=b;show();}); btabs.appendChild(el);
 });
-show(current);
+layers.forEach((Lr,i)=>{
+  const el=document.createElement('button'); el.className='tab'; el.id='tab-'+Lr.name.toLowerCase(); el.setAttribute('role','tab'); el.textContent=Lr.name;
+  el.addEventListener('click',()=>{curL=i;show();}); tabs.appendChild(el);
+});
+show();
 })();
 </script>
