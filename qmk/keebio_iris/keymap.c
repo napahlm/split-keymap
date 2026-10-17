@@ -66,15 +66,15 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * ,-----------------------------------------.                ,-----------------------------------------.
  * | ESC  |  1   |  2   |  3   |  4   |  5   |                |  6   |  7   |  8   |  9   |  0   | BSPC |
  * | TAB  |  Q   |  W   |  E   |  R   |  T   |                |  Y   |  U   |  I   |  O   |  P   | DEL  |
- * | SHFT |  A   |  S   |  D   |  F   |  G   |                |  H   |  J   |  K   |  L   |  ;   |  '   |
- * | CTRL |  Z   |  X   |  C   |  V   |  B   | ALT  |  |  -   |  N   |  M   |  ,   |  .   |  /   | SHFT |
+ * | SHFT |  A   |  S   |  D   |  F   |  G   |                |  H   |  J   |  K   |  L   |  ;   | SHFT |
+ * | CTRL |  Z   |  X   |  C   |  V   |  B   | ALT  |  |  -   |  N   |  M   |  ,   |  .   |  /   |  '   |
  * `--------------------------' GUI  | NAV  | SPC  |  | ENT  | SYM  | FN   '--------------------------'
  */
 [BASE] = LAYOUT(
   KC_ESC,  NO_1,    NO_2,    NO_3,    NO_4,    NO_5,                        NO_6,    NO_7,    NO_8,    NO_9,    NO_0,    KC_BSPC,
   KC_TAB,  NO_Q,    NO_W,    NO_E,    NO_R,    NO_T,                        NO_Y,    NO_U,    NO_I,    NO_O,    NO_P,    KC_DEL,
-  KC_LSFT, NO_A,    NO_S,    NO_D,    NO_F,    NO_G,                        NO_H,    NO_J,    NO_K,    NO_L,    NO_SCLN, NO_QUOT,
-  KC_LCTL, NO_Z,    NO_X,    NO_C,    NO_V,    NO_B,    KC_LALT,   NO_MINS, NO_N,    NO_M,    NO_COMM, NO_DOT,  NO_SLSH, KC_RSFT,
+  KC_LSFT, NO_A,    NO_S,    NO_D,    NO_F,    NO_G,                        NO_H,    NO_J,    NO_K,    NO_L,    NO_SCLN, KC_RSFT,
+  KC_LCTL, NO_Z,    NO_X,    NO_C,    NO_V,    NO_B,    KC_LALT,   NO_MINS, NO_N,    NO_M,    NO_COMM, NO_DOT,  NO_SLSH, NO_QUOT,
                                 KC_LGUI, MO(NAV), KC_SPC,            KC_ENT,  MO(SYM), MO(FN)
 ),
 

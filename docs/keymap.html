@@ -199,8 +199,8 @@ const baseMain={
  right:[
   [['6',A,'&'],['7',A,'/'],['8',A,'('],['9',A,')'],['0',A,'='],['BSPC',M]],
   [['Y',A],['U',A],['I',A],['O',A],['P',A],['DEL',M]],
-  [['H',A],['J',A],['K',A],['L',A],[';',S],["'",S,'*']],
-  [['N',A],['M',A],[',',S],['.',S,':'],['/',S],['SHIFT',M]] ]
+  [['H',A],['J',A],['K',A],['L',A],[';',S],['SHIFT',M]],
+  [['N',A],['M',A],[',',S],['.',S,':'],['/',S],["'",S,'*']] ]
 };
 const navMain={
  left:[
@@ -265,10 +265,10 @@ const boards={
 const layers=[
  {name:'BASE',hint:'Always active. Plain QWERTY alphas and number row, ; and \' where QWERTY puts them. Shift on the Norwegian layout adds _ : * on the keys shown.',
   notes:{lily58:[['Thumbs','Left: GUI, Alt, NAV (hold), Space. Right: Enter, SYM (hold), Backspace, FN (hold).'],
-                 ['Pinky columns','Left: Esc, Tab, Shift, Ctrl. Right: Backspace, Delete, apostrophe, Shift.'],
+                 ['Pinky columns','Left: Esc, Tab, Shift, Ctrl. Right: Backspace, Delete, Shift, apostrophe: Shift sits on the home row, not in the corner.'],
                  ['Inner keys','= on the left index reach, - on the right; direct access to the two most typed symbols that are not on the main block.']],
          iris:[['Thumbs','Left: GUI, NAV (hold), Space. Right: Enter, SYM (hold), FN (hold). No thumb Backspace; it is top-right.'],
-               ['Pinky columns','Left: Esc, Tab, Shift, Ctrl. Right: Backspace, Delete, apostrophe, Shift.'],
+               ['Pinky columns','Left: Esc, Tab, Shift, Ctrl. Right: Backspace, Delete, Shift, apostrophe: Shift sits on the home row, not in the corner.'],
                ['Inner keys','Alt on the left inner key, where it was on the old Iris map. - on the right inner key as a bonus; it is also on SYM + J.']]}},
  {name:'NAV',hint:'Hold the left thumb. Same hand steers: S D F V are left, right, up, down; the right hand stays on the mouse.',
   notes:{all:[['Arrows','S ← , D → , F ↑ , V ↓ under the left thumb hold. PgUp right of the up arrow on G, PgDn under it on B. Home above the up arrow on R, End right of it on T.'],

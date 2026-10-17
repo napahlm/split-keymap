@@ -109,7 +109,7 @@
         /* Both shifts together: Caps Word, for ENV_VARS and CONSTANTS. */
         combo_caps_word {
             timeout-ms = <50>;
-            key-positions = <24 49>;
+            key-positions = <24 35>;
             bindings = <&caps_word>;
         };
     };
@@ -122,14 +122,14 @@
 // ------------------------------------------------------------------------------------------------------------
 // |  ESC  |  1  |  2  |  3   |  4   |  5   |                   |  6   |  7    |  8    |  9   |   0   | BSPC  |
 // |  TAB  |  Q  |  W  |  E   |  R   |  T   |                   |  Y   |  U    |  I    |  O   |   P   |  DEL  |
-// | SHIFT |  A  |  S  |  D   |  F   |  G   |                   |  H   |  J    |  K    |  L   |   ;   |   '   |
-// | CTRL  |  Z  |  X  |  C   |  V   |  B   |   =    |  |   -   |  N   |  M    |  ,    |  .   |   /   | SHIFT |
+// | SHIFT |  A  |  S  |  D   |  F   |  G   |                   |  H   |  J    |  K    |  L   |   ;   | SHIFT |
+// | CTRL  |  Z  |  X  |  C   |  V   |  B   |   =    |  |   -   |  N   |  M    |  ,    |  .   |   /   |   '   |
 //                     | GUI  | ALT  | NAV  |  SPACE |  | ENTER | SYM  | BSPC  |  FN   |
             bindings = <
 &kp ESC   &kp NB_N1 &kp NB_N2 &kp NB_N3 &kp NB_N4 &kp NB_N5                               &kp NB_N6 &kp NB_N7 &kp NB_N8    &kp NB_N9  &kp NB_N0   &kp BSPC
 &kp TAB   &kp NB_Q  &kp NB_W  &kp NB_E  &kp NB_R  &kp NB_T                                &kp NB_Y  &kp NB_U  &kp NB_I     &kp NB_O   &kp NB_P    &kp DEL
-&kp LSHFT &kp NB_A  &kp NB_S  &kp NB_D  &kp NB_F  &kp NB_G                                &kp NB_H  &kp NB_J  &kp NB_K     &kp NB_L   &kp NB_SEMI &kp NB_SQT
-&kp LCTRL &kp NB_Z  &kp NB_X  &kp NB_C  &kp NB_V  &kp NB_B  &kp NB_EQUAL     &kp NB_MINUS &kp NB_N  &kp NB_M  &kp NB_COMMA &kp NB_DOT &kp NB_FSLH &kp RSHFT
+&kp LSHFT &kp NB_A  &kp NB_S  &kp NB_D  &kp NB_F  &kp NB_G                                &kp NB_H  &kp NB_J  &kp NB_K     &kp NB_L   &kp NB_SEMI &kp RSHFT
+&kp LCTRL &kp NB_Z  &kp NB_X  &kp NB_C  &kp NB_V  &kp NB_B  &kp NB_EQUAL     &kp NB_MINUS &kp NB_N  &kp NB_M  &kp NB_COMMA &kp NB_DOT &kp NB_FSLH &kp NB_SQT
                               &kp LGUI  &kp LALT  &mo NAV   &kp SPACE        &kp RET      &mo SYM   &kp BSPC  &mo FN
             >;
         };
