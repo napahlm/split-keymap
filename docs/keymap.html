@@ -141,9 +141,9 @@ th{font-weight:600;font-size:.78rem;letter-spacing:.04em;text-transform:uppercas
     <h3>Where the shell characters live</h3>
     <ul>
       <li><code>/</code> <code>.</code> <code>,</code> <code>;</code> <code>'</code> on BASE; Shift gives <code>_</code> <code>:</code> <code>*</code> for free on the Norwegian layout. The Lily58 also has <code>=</code> and <code>-</code> on its inner keys.</li>
-      <li>SYM right home row, the best spots: <code>"</code> on H, <code>+</code> on J, <code>-</code> on K, <code>=</code> on L, <code>_</code> on <code>;</code>. Æ Ø Å run from P across to the Del key and down to <code>'</code>. <code>!</code> on <code>,</code>, <code>?</code> on <code>.</code>.</li>
-      <li>SYM left hand: bracket pairs on resting finger pairs: <code>( )</code> on A S, <code>{ }</code> on D F, <code>[ ]</code> on Z X. <code>|</code> on G, <code>\</code> on C, <code>&amp; *</code> on V B, <code>~ &lt; &gt; $ %</code> on the top row.</li>
-      <li>The rare <code>^</code> and <code>€</code> sit on the bottom-row corners; <code>`</code> on Y. Every printable ASCII symbol has a spot, and the Norwegian dead keys <code>´ ¨</code> live on FN for accents.</li>
+      <li>SYM right home row, the best spots: <code>"</code> on H, <code>+</code> on J, <code>-</code> on K, <code>=</code> on L, <code>_</code> under the dash on <code>,</code>. Å Ø Æ in one column under 0 (P, <code>;</code>, <code>/</code>). <code>! ?</code> on U I, <code>@ #</code> on M and <code>.</code>.</li>
+      <li>SYM left hand: bracket pairs on resting finger pairs: <code>&lt; &gt;</code> on Q W above <code>( )</code> on A S, <code>{ }</code> on D F, <code>[ ]</code> on Z X. <code>~</code> on E, <code>|</code> on G, <code>\</code> on C, <code>&amp; *</code> on V B, <code>$ %</code> on R T.</li>
+      <li>The rare <code>€</code> and <code>^</code> sit on the outer right column; <code>`</code> on Y. Every printable ASCII symbol has a spot, and the Norwegian dead keys <code>´ ¨</code> live on FN for accents.</li>
     </ul>
   </div>
   <div class="card">
@@ -218,14 +218,14 @@ const macMain={left:[[_,_,_,_,_,_],[_,_,_,_,_,_],[_,_,_,_,_,_],[_,_,_,_,_,_]],ri
 const symMain={
  left:[
   [_,_,_,_,_,_],
-  [_,['~',S],['<',S],['>',S],['$',S],['%',S]],
+  [_,['<',S],['>',S],['~',S],['$',S],['%',S]],
   [_,['(',S],[')',S],['{',S],['}',S],['|',S]],
   [_,['[',S],[']',S],['\\',S],['&',S],['*',S]] ],
  right:[
   [_,_,_,_,_,_],
-  [['`',S],['@',S],['#',S],_,['Æ',A],['Ø',A]],
-  [['"',S],['+',S],['-',S],['=',S],['_',S],['Å',A]],
-  [['^',S],_,['!',S],['?',S],_,['€',S]] ]
+  [['`',S],['!',S],['?',S],_,['Å',A],['€',S]],
+  [['"',S],['+',S],['-',S],['=',S],['Ø',A],['^',S]],
+  [_,['@',S],['_',S],['#',S],['Æ',A],_] ]
 };
 const fnLeftRows=[
   [_,['F1',F],['F2',F],['F3',F],['F4',F],['F5',F]],
@@ -276,9 +276,9 @@ const layers=[
               ['Modifiers','Shift and Ctrl on the left pinky column pass through: Shift + NAV + S selects left, Ctrl + NAV + D jumps a word.'],
               ['Right hand','Media on the top letter row: play, vol+, vol−, mute, bri+, bri−. Zoom in / out / reset on J K L. WIN on the Tab key cycles windows of the same app (Alt+` on Linux, Cmd+< on the Mac). The OS-specific ones switch to Cmd/Opt automatically while MAC is on.']]}},
  {name:'SYM',hint:'Hold the right thumb. Bracket pairs on resting finger pairs on the left; the right home row carries the symbols typed most.',
-  notes:{all:[['Bracket pairs','( ) on A S, { } on D F, [ ] on Z X: pinky + ring and middle + index, where the fingers already rest. | on G, \\ on C, & * on V B, ~ < > $ % on the top row.'],
-              ['Right home row','" on H, + on J, - on K, = on L, _ on ;.'],
-              ['Æ Ø Å','Æ on P, Ø on the Del key, Å under it on the \' key. ! on the , key, ? on the . key. ` on Y, the rare ^ and € on the bottom-row corners (N and the Shift position).'],
+  notes:{all:[['Bracket pairs','< > on Q W directly above ( ) on A S, { } on D F, [ ] on Z X: pinky + ring and middle + index, where the fingers already rest. ~ right of < >, | on G, \\ on C, & * on V B, $ % on the top row.'],
+              ['Right home row','" on H, + on J, - on K, = on L, with _ directly under the - on the , key.'],
+              ['Å Ø Æ','One column under 0: Å on P, Ø on ;, Æ on /. ! ? on U I, @ # on M and the . key, ` on Y. The rare € and ^ on the outer column.'],
               ['Digits','Number row falls through, so SYM + 7 still types 7. Useful for $1, ${2}, [0].']]}},
  {name:'FN',hint:'Hold the right outer thumb. Numpad under the right hand, F-keys under the left.',
   notes:{lily58:[['Hosts','FN + 1..5 is one macro each: select the Bluetooth profile and set the underglow to that profile\'s colour (red, green, blue, yellow, purple). BT CLR forgets the current profile, USB/BT switches output when cabled.'],
