@@ -141,14 +141,14 @@ th{font-weight:600;font-size:.78rem;letter-spacing:.04em;text-transform:uppercas
     <h3>Where the shell characters live</h3>
     <ul>
       <li><code>/</code> <code>.</code> <code>,</code> <code>;</code> <code>'</code> on BASE; Shift gives <code>_</code> <code>:</code> <code>*</code> for free on the Norwegian layout. The Lily58 also has <code>=</code> and <code>-</code> on its inner keys.</li>
-      <li>SYM right home row, the best spots: <code>"</code> on H, <code>-</code> on J, <code>_</code> on K, <code>=</code> on L. Å Ø Æ stacked in the column after that (P, ;, /), <code>?</code> on the <code>.</code> key.</li>
+      <li>SYM right home row, the best spots: <code>"</code> on H, <code>+</code> on J, <code>-</code> on K, <code>=</code> on L, <code>_</code> on <code>;</code>. Æ Ø Å run from P across to the Del key and down to <code>'</code>. <code>!</code> on <code>,</code>, <code>?</code> on <code>.</code>.</li>
       <li>SYM left hand: bracket pairs on resting finger pairs: <code>( )</code> on A S, <code>{ }</code> on D F, <code>[ ]</code> on Z X. <code>|</code> on G, <code>\</code> on C, <code>&amp; *</code> on V B, <code>~ &lt; &gt; $ %</code> on the top row.</li>
-      <li>The rare <code>€</code> and <code>^</code> are pushed to the outermost right column; <code>`</code> on Y, <code>+</code> on N.</li>
+      <li>The rare <code>^</code> and <code>€</code> sit on the bottom-row corners; <code>`</code> on Y. Every printable ASCII symbol has a spot, and the Norwegian dead keys <code>´ ¨</code> live on FN for accents.</li>
     </ul>
   </div>
   <div class="card">
     <h3>Arrows on the left hand</h3>
-    <p>NAV is held by the left thumb and the same hand steers: <code>S</code> left, <code>D</code> right, <code>F</code> up, <code>V</code> down, so the right hand can stay on the mouse. Home and End on A and G bracket the arrows, PgUp above the up arrow on R, PgDn beside the down arrow on B, word-jump under left/right on X and C, word-delete on W and E. Shift and Ctrl on the left pinky column pass through, so select-word and jump-word need no extra layer.</p>
+    <p>NAV is held by the left thumb and the same hand steers: <code>S</code> left, <code>D</code> right, <code>F</code> up, <code>V</code> down, so the right hand can stay on the mouse. PgUp and PgDn on G and B right of the arrows, Home and End on R and T above them, word-jump under left/right on X and C, word-delete on W and E, Del on Z. Shift and Ctrl on the left pinky column pass through, so select-word and jump-word need no extra layer. On macOS the word keys need the MAC layer (Option combos); on the Lily58 that follows the Bluetooth profile, on the Iris it is FN + MAC once and remembered.</p>
   </div>
   <div class="card">
     <h3>Thumb rows</h3>
@@ -204,14 +204,14 @@ const baseMain={
 };
 const navMain={
  left:[
-  [_,_,_,_,_,_],
-  [['WIN',N,'','same app'],['INS',N],['⌃⌫',N,'','word'],['⌃DEL',N,'','word'],['PGUP',N],['DEL',N]],
-  [_,['HOME',N],['←',N],['→',N],['↑',N],['END',N]],
-  [_,['PRTSC',N],['⌃←',N,'','word'],['⌃→',N,'','word'],['↓',N],['PGDN',N]] ],
+  [['PRTSC',N],_,_,_,_,_],
+  [['WIN',N,'','same app'],['INS',N],['DEL W',N,'←','word'],['DEL W',N,'→','word'],['HOME',N],['END',N]],
+  [_,_,['←',N],['→',N],['↑',N],['PGUP',N]],
+  [_,['DEL',N],['WORD',N,'←','jump'],['WORD',N,'→','jump'],['↓',N],['PGDN',N]] ],
  right:[
   [_,_,_,_,_,_],
-  [['PLAY',MD],['VOL−',MD],['VOL+',MD],['MUTE',MD],['BRI−',MD],['BRI+',MD]],
-  [['ZOOM 0',N,'','reset'],_,_,_,_,_],
+  [['PLAY',MD],['VOL+',MD],['VOL−',MD],['MUTE',MD],['BRI+',MD],['BRI−',MD]],
+  [_,['ZOOM+',N],['ZOOM−',N],['ZOOM0',N,'','reset'],_,_],
   [_,_,_,_,_,_] ]
 };
 const macMain={left:[[_,_,_,_,_,_],[_,_,_,_,_,_],[_,_,_,_,_,_],[_,_,_,_,_,_]],right:[[_,_,_,_,_,_],[_,_,_,_,_,_],[_,_,_,_,_,_],[_,_,_,_,_,_]]};
@@ -223,14 +223,14 @@ const symMain={
   [_,['[',S],[']',S],['\\',S],['&',S],['*',S]] ],
  right:[
   [_,_,_,_,_,_],
-  [['`',S],['@',S],['#',S],['!',S],['Å',A],['€',S]],
-  [['"',S],['-',S],['_',S],['=',S],['Ø',A],['^',S]],
-  [['+',S],_,_,['?',S],['Æ',A],_] ]
+  [['`',S],['@',S],['#',S],_,['Æ',A],['Ø',A]],
+  [['"',S],['+',S],['-',S],['=',S],['_',S],['Å',A]],
+  [['^',S],_,['!',S],['?',S],_,['€',S]] ]
 };
 const fnLeftRows=[
   [_,['F1',F],['F2',F],['F3',F],['F4',F],['F5',F]],
   [_,['F6',F],['F7',F],['F8',F],['F9',F],['F10',F]],
-  [_,['F11',F],['F12',F],_,_,_] ];
+  [_,['F11',F],['F12',F],['´',S,'','dead'],['¨',S,'','dead'],_] ];
 const fnRightRows=[
   [['/',NUM],['7',NUM],['8',NUM],['9',NUM],['-',NUM],['BSPC',M]],
   [['*',NUM],['4',NUM],['5',NUM],['6',NUM],['+',NUM],['ENTER',M]],
@@ -247,13 +247,13 @@ fnMain.lily58.right[0][5]=['MAC',B,'','manual'];
 const edges={
  lily58:{
   BASE:{innerL:['=',S],innerR:['-',S,'_'],thumbsL:[['GUI',M],['ALT',M],['NAV',L,'','hold'],['SPACE',M]],thumbsR:[['ENTER',M],['SYM',L,'','hold'],['BSPC',M],['FN',L,'','hold']]},
-  NAV:{innerL:['ZOOM +',N],innerR:['ZOOM −',N],thumbsL:[_,_,['NAV',L,'','held'],_],thumbsR:[_,_,_,_]},
+  NAV:{innerL:_,innerR:_,thumbsL:[_,_,['NAV',L,'','held'],_],thumbsR:[_,_,_,_]},
   SYM:{innerL:_,innerR:_,thumbsL:[_,_,_,_],thumbsR:[_,['SYM',L,'','held'],_,_]},
   FN:{innerL:_,innerR:_,thumbsL:[_,_,_,_],thumbsR:[_,_,_,['FN',L,'','held']]},
   MAC:{innerL:_,innerR:_,thumbsL:[['CMD',M,'⌘'],['OPT',M,'⌥'],_,_],thumbsR:[_,_,_,_]} },
  iris:{
   BASE:{innerL:['ALT',M],innerR:['-',S,'_'],thumbsL:[['GUI',M],['NAV',L,'','hold'],['SPACE',M]],thumbsR:[['ENTER',M],['SYM',L,'','hold'],['FN',L,'','hold']]},
-  NAV:{innerL:['ZOOM +',N],innerR:['ZOOM −',N],thumbsL:[_,['NAV',L,'','held'],_],thumbsR:[_,_,_]},
+  NAV:{innerL:_,innerR:_,thumbsL:[_,['NAV',L,'','held'],_],thumbsR:[_,_,_]},
   SYM:{innerL:_,innerR:_,thumbsL:[_,_,_],thumbsR:[_,['SYM',L,'','held'],_]},
   FN:{innerL:_,innerR:_,thumbsL:[_,_,_],thumbsR:[_,_,['FN',L,'','held']]},
   MAC:{innerL:['OPT',M,'⌥'],innerR:_,thumbsL:[['CMD',M,'⌘'],_,_],thumbsR:[_,_,_]} }
@@ -271,23 +271,24 @@ const layers=[
                ['Pinky columns','Left: Esc, Tab, Shift, Ctrl. Right: Backspace, Delete, apostrophe, Shift.'],
                ['Inner keys','Alt on the left inner key, where it was on the old Iris map. - on the right inner key as a bonus; it is also on SYM + J.']]}},
  {name:'NAV',hint:'Hold the left thumb. Same hand steers: S D F V are left, right, up, down; the right hand stays on the mouse.',
-  notes:{all:[['Arrows','S ← , D → , F ↑ , V ↓ under the left thumb hold. Home on A, End on G.'],
-              ['Pages and words','PgUp above the up arrow on R, PgDn beside the down arrow on B. Word left/right under the arrows on X and C, delete word back/forward on W and E, Insert on Q, Del on T, PrtSc on Z.'],
+  notes:{all:[['Arrows','S ← , D → , F ↑ , V ↓ under the left thumb hold. PgUp right of the up arrow on G, PgDn under it on B. Home above the up arrow on R, End right of it on T.'],
+              ['Words and deletes','WORD ← / → on X and C jump a word (Ctrl+arrow). DEL W ← / → on W and E delete the word left / right of the cursor (Ctrl+Backspace, Ctrl+Del). Plain Del on Z, Insert on Q, PrtSc on Esc.'],
               ['Modifiers','Shift and Ctrl on the left pinky column pass through: Shift + NAV + S selects left, Ctrl + NAV + D jumps a word.'],
-              ['Window and zoom','WIN on the Tab key cycles windows of the same app (Alt+` on Linux, Cmd+< on the Mac). Zoom in/out on the two inner keys, zoom reset on H. All of these switch to their Cmd/Opt versions automatically while the MAC layer is on.'],
-              ['Right hand','Media: play, volume, mute, brightness on the top letter row.']]}},
+              ['Right hand','Media on the top letter row: play, vol+, vol−, mute, bri+, bri−. Zoom in / out / reset on J K L. WIN on the Tab key cycles windows of the same app (Alt+` on Linux, Cmd+< on the Mac). The OS-specific ones switch to Cmd/Opt automatically while MAC is on.']]}},
  {name:'SYM',hint:'Hold the right thumb. Bracket pairs on resting finger pairs on the left; the right home row carries the symbols typed most.',
   notes:{all:[['Bracket pairs','( ) on A S, { } on D F, [ ] on Z X: pinky + ring and middle + index, where the fingers already rest. | on G, \\ on C, & * on V B, ~ < > $ % on the top row.'],
-              ['Right home row','" on H, - on J, _ on K, = on L.'],
-              ['Å Ø Æ','One column: Å on P, Ø on ;, Æ on /. ? sits on the . key. The rare € and ^ are pushed to the outermost column; ` on Y, + on N.'],
+              ['Right home row','" on H, + on J, - on K, = on L, _ on ;.'],
+              ['Æ Ø Å','Æ on P, Ø on the Del key, Å under it on the \' key. ! on the , key, ? on the . key. ` on Y, the rare ^ and € on the bottom-row corners (N and the Shift position).'],
               ['Digits','Number row falls through, so SYM + 7 still types 7. Useful for $1, ${2}, [0].']]}},
  {name:'FN',hint:'Hold the right outer thumb. Numpad under the right hand, F-keys under the left.',
   notes:{lily58:[['Hosts','FN + 1..5 is one macro each: select the Bluetooth profile and set the underglow to that profile\'s colour (red, green, blue, yellow, purple). BT CLR forgets the current profile, USB/BT switches output when cabled.'],
                  ['LEDs','LED toggles underglow, LED − / LED + change brightness.'],
-                 ['Numpad','7 8 9 / 4 5 6 / 1 2 3 under U I O, J K L, M , . with 0 on N. Operators on the outer columns.']],
+                 ['Numpad','7 8 9 / 4 5 6 / 1 2 3 under U I O, J K L, M , . with 0 on N. Operators on the outer columns. Sends plain digits, so NumLock state on Windows and Linux does not matter.'],
+                 ['Accents','´ and ¨ on C and V are the Norwegian dead keys: ´ then e gives é, ¨ then u gives ü.']],
          iris:[['RGB','Wired board, so no host profiles. Top row: RGB on/off, next mode, hue, saturation, brightness.'],
-               ['Numpad','7 8 9 / 4 5 6 / 1 2 3 under U I O, J K L, M , . with 0 on N. Operators on the outer columns.'],
-               ['Mac','MAC toggles the macOS modifier order by hand.']]}},
+               ['Numpad','7 8 9 / 4 5 6 / 1 2 3 under U I O, J K L, M , . with 0 on N. Operators on the outer columns. Sends plain digits, so NumLock does not matter.'],
+               ['Accents','´ and ¨ on C and V are the Norwegian dead keys: ´ then e gives é, ¨ then u gives ü.'],
+               ['Mac','MAC toggles the Mac flag layer and remembers it across unplugging.']]}},
  {name:'MAC',hint:'Mac flag layer. Lily58: on automatically with Bluetooth profile 1, off with 2 to 5, or by hand with FN + MAC. Iris: FN + MAC toggles it. Nothing moves on BASE: the GUI key is Cmd and ALT is Opt on macOS already.',
   notes:{lily58:[['Thumbs','Cmd on the outer thumb (GUI), Opt next to it (ALT), Ctrl on the pinky, same as every other host. The layer only changes what NAV does.'],
                  ['NAV while MAC','Word jumps and word deletes become Option combos, zoom and same-app window switching become Cmd combos, at the same positions.'],

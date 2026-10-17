@@ -9,6 +9,7 @@
  * the firmware sends the right (AltGr) scancodes.
  *
  * Layers: BASE, NAV, SYM, FN, MAC, MAC_NAV (NAV + MAC, automatic)
+ * MAC is toggled with FN + MAC and remembered in EEPROM across unplugging.
  */
 
 #include QMK_KEYBOARD_H
@@ -16,8 +17,28 @@
 
 enum layers { BASE, NAV, SYM, FN, MAC, MAC_NAV };
 
-/* Dead keys on the Norwegian layout: tap the key, then space, so the plain symbol comes out. */
-enum custom_keycodes { NO_TILD_S = SAFE_RANGE, NO_CIRC_S, NO_GRV_S };
+enum custom_keycodes {
+    NO_TILD_S = SAFE_RANGE, /* dead keys on the Norwegian layout: tap the key, then space */
+    NO_CIRC_S,
+    NO_GRV_S,
+    MAC_TOG,                /* toggle MAC and remember it */
+};
+
+typedef union {
+    uint32_t raw;
+    struct { bool mac : 1; };
+} user_config_t;
+static user_config_t user_config;
+
+void eeconfig_init_user(void) {
+    user_config.raw = 0;
+    eeconfig_update_user(user_config.raw);
+}
+
+void keyboard_post_init_user(void) {
+    user_config.raw = eeconfig_read_user();
+    if (user_config.mac) layer_on(MAC);
+}
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     if (!record->event.pressed) return true;
@@ -25,8 +46,18 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         case NO_TILD_S: tap_code16(NO_TILD); tap_code(KC_SPC); return false;
         case NO_CIRC_S: tap_code16(NO_CIRC); tap_code(KC_SPC); return false;
         case NO_GRV_S:  tap_code16(NO_GRV);  tap_code(KC_SPC); return false;
+        case MAC_TOG:
+            layer_invert(MAC);
+            user_config.mac = layer_state_is(MAC);
+            eeconfig_update_user(user_config.raw);
+            return false;
     }
     return true;
+}
+
+/* MAC + NAV together activate MAC_NAV. */
+layer_state_t layer_state_set_user(layer_state_t state) {
+    return update_tri_layer_state(state, NAV, MAC, MAC_NAV);
 }
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -49,35 +80,36 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 /* NAV (hold left thumb) - arrows on the left hand so the right hand stays on the mouse
  * ,-----------------------------------------.                ,-----------------------------------------.
- * |      |      |      |      |      |      |                |      |      |      |      |      |      |
- * | WIN  | INS  |C+BSP |C+DEL | PGUP | DEL  |                | PLAY | VOL- | VOL+ | MUTE | BRI- | BRI+ |
- * |      | HOME |  <-  |  ->  |  ^   | END  |                |ZOOM0 |      |      |      |      |      |
- * |      |PRTSC | C+<- | C+-> |  v   | PGDN |ZOOM+ |  |ZOOM- |      |      |      |      |      |      |
+ * |PRTSC |      |      |      |      |      |                |      |      |      |      |      |      |
+ * | WIN  | INS  |DELW< |DELW> | HOME | END  |                | PLAY | VOL+ | VOL- | MUTE | BRI+ | BRI- |
+ * |      |      |  <-  |  ->  |  ^   | PGUP |                |      |ZOOM+ |ZOOM- |ZOOM0 |      |      |
+ * |      | DEL  |WORD< |WORD> |  v   | PGDN |      |  |      |      |      |      |      |      |      |
  * `--------------------------'      | HELD |      |  |      |      |      '--------------------------'
- * WIN = next window of the same app (Alt+` on Linux/GNOME).
+ * DELW< / DELW> = delete word left / right. WORD< / WORD> = jump a word. WIN = next window of the same app (Alt+`).
  */
 [NAV] = LAYOUT(
-  _______,    _______, _______,    _______,    _______, _______,                        _______,    _______, _______, _______, _______, _______,
-  A(NO_PIPE), KC_INS,  C(KC_BSPC), C(KC_DEL),  KC_PGUP, KC_DEL,                         KC_MPLY,    KC_VOLD, KC_VOLU, KC_MUTE, KC_BRID, KC_BRIU,
-  _______,    KC_HOME, KC_LEFT,    KC_RGHT,    KC_UP,   KC_END,                         C(NO_0),    _______, _______, _______, _______, _______,
-  _______,    KC_PSCR, C(KC_LEFT), C(KC_RGHT), KC_DOWN, KC_PGDN, C(NO_PLUS), C(NO_MINS), _______,   _______, _______, _______, _______, _______,
+  KC_PSCR,    _______, _______,    _______,    _______, _______,                     _______, _______,    _______,    _______, _______, _______,
+  A(NO_PIPE), KC_INS,  C(KC_BSPC), C(KC_DEL),  KC_HOME, KC_END,                      KC_MPLY, KC_VOLU,    KC_VOLD,    KC_MUTE, KC_BRIU, KC_BRID,
+  _______,    _______, KC_LEFT,    KC_RGHT,    KC_UP,   KC_PGUP,                     _______, C(NO_PLUS), C(NO_MINS), C(NO_0), _______, _______,
+  _______,    KC_DEL,  C(KC_LEFT), C(KC_RGHT), KC_DOWN, KC_PGDN, _______,   _______, _______, _______,    _______,    _______, _______, _______,
                                       _______, _______, _______,            _______, _______, _______
 ),
 
-/* SYM (hold right thumb) - bracket pairs on resting finger pairs, - _ = on the right home row,
- * Å Ø Æ in one column, ? on the . key, the rare € and ^ on the outermost column
+/* SYM (hold right thumb)
  * ,-----------------------------------------.                ,-----------------------------------------.
  * |      |      |      |      |      |      |                |      |      |      |      |      |      |
- * |      |  ~   |  <   |  >   |  $   |  %   |                |  `   |  @   |  #   |  !   |  Å   |  €   |
- * |      |  (   |  )   |  {   |  }   |  |   |                |  "   |  -   |  _   |  =   |  Ø   |  ^   |
- * |      |  [   |  ]   |  \   |  &   |  *   |      |  |      |  +   |      |      |  ?   |  Æ   |      |
+ * |      |  ~   |  <   |  >   |  $   |  %   |                |  `   |  @   |  #   |      |  Æ   |  Ø   |
+ * |      |  (   |  )   |  {   |  }   |  |   |                |  "   |  +   |  -   |  =   |  _   |  Å   |
+ * |      |  [   |  ]   |  \   |  &   |  *   |      |  |      |  ^   |      |  !   |  ?   |      |  €   |
  * `--------------------------'      |      |      |  |      | HELD |      '--------------------------'
+ * Bracket pairs on resting finger pairs: ( ) on A S, { } on D F, [ ] on Z X.
+ * Right home row: " + - = _ from the inner reach outward. Æ Ø Å from P across to the pinky column and down.
  */
 [SYM] = LAYOUT(
-  _______, _______,   _______, _______, _______, _______,                     _______,  _______, _______, _______, _______, _______,
-  _______, NO_TILD_S, NO_LABK, NO_RABK, NO_DLR,  NO_PERC,                     NO_GRV_S, NO_AT,   NO_HASH, NO_EXLM, NO_ARNG, NO_EURO,
-  _______, NO_LPRN,   NO_RPRN, NO_LCBR, NO_RCBR, NO_PIPE,                     NO_DQUO,  NO_MINS, NO_UNDS, NO_EQL,  NO_OSTR, NO_CIRC_S,
-  _______, NO_LBRC,   NO_RBRC, NO_BSLS, NO_AMPR, NO_ASTR, _______,   _______, NO_PLUS,  _______, _______, NO_QUES, NO_AE,   _______,
+  _______, _______,   _______, _______, _______, _______,                     _______,   _______, _______, _______, _______, _______,
+  _______, NO_TILD_S, NO_LABK, NO_RABK, NO_DLR,  NO_PERC,                     NO_GRV_S,  NO_AT,   NO_HASH, _______, NO_AE,   NO_OSTR,
+  _______, NO_LPRN,   NO_RPRN, NO_LCBR, NO_RCBR, NO_PIPE,                     NO_DQUO,   NO_PLUS, NO_MINS, NO_EQL,  NO_UNDS, NO_ARNG,
+  _______, NO_LBRC,   NO_RBRC, NO_BSLS, NO_AMPR, NO_ASTR, _______,   _______, NO_CIRC_S, _______, NO_EXLM, NO_QUES, _______, NO_EURO,
                                    _______, _______, _______,            _______, _______, _______
 ),
 
@@ -86,18 +118,19 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |      | RGB  | MODE | HUE+ | SAT+ | BRI+ |                |      |      |      |      |      | MAC  |
  * |      |  F1  |  F2  |  F3  |  F4  |  F5  |                |  /   |  7   |  8   |  9   |  -   | BSPC |
  * |      |  F6  |  F7  |  F8  |  F9  | F10  |                |  *   |  4   |  5   |  6   |  +   | ENT  |
- * |      | F11  | F12  |      |      |      |      |  |      |  0   |  1   |  2   |  3   |  .   |  =   |
+ * |      | F11  | F12  |  ´   |  ¨   |      |      |  |      |  0   |  1   |  2   |  3   |  .   |  =   |
  * `--------------------------'      |      |      |  |      |      | HELD '--------------------------'
+ * Numpad sends plain digits so NumLock does not matter. ´ and ¨ are dead keys for accents (´ e = é).
  */
 [FN] = LAYOUT(
-  _______, RM_TOGG, RM_NEXT, RM_HUEU, RM_SATU, RM_VALU,                     _______, _______, _______, _______, _______, TG(MAC),
-  _______, KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,                       KC_PSLS, KC_P7,   KC_P8,   KC_P9,   KC_PMNS, KC_BSPC,
-  _______, KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,                      KC_PAST, KC_P4,   KC_P5,   KC_P6,   KC_PPLS, KC_ENT,
-  _______, KC_F11,  KC_F12,  _______, _______, _______, _______,   _______, KC_P0,   KC_P1,   KC_P2,   KC_P3,   NO_DOT,  NO_EQL,
+  _______, RM_TOGG, RM_NEXT, RM_HUEU, RM_SATU, RM_VALU,                     _______, _______, _______, _______, _______, MAC_TOG,
+  _______, KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,                       NO_SLSH, NO_7,    NO_8,    NO_9,    NO_MINS, KC_BSPC,
+  _______, KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,                      NO_ASTR, NO_4,    NO_5,    NO_6,    NO_PLUS, KC_ENT,
+  _______, KC_F11,  KC_F12,  NO_ACUT, NO_DIAE, _______, _______,   _______, NO_0,    NO_1,    NO_2,    NO_3,    NO_DOT,  NO_EQL,
                                    _______, _______, _______,            _______, _______, _______
 ),
 
-/* MAC (toggle with FN + MAC) - a flag layer. GUI thumb is Cmd and the inner ALT key is Opt on macOS already,
+/* MAC (FN + MAC, remembered) - a flag layer. GUI thumb is Cmd and the inner ALT key is Opt on macOS already,
  * so nothing moves; with NAV held this enables MAC_NAV, the Cmd/Opt variant of the OS-specific NAV keys.
  * TODO: Norwegian macOS layout uses different Option combos for @ $ { } [ ] | \ ; add a mac SYM when needed.
  */
@@ -109,17 +142,12 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                    _______, _______, _______,            _______, _______, _______
 ),
 
-/* MAC_NAV (automatic while MAC and NAV are both held) - Cmd/Opt versions of the OS-specific NAV keys */
+/* MAC_NAV (automatic while MAC and NAV are both on) - Cmd/Opt versions of the OS-specific NAV keys */
 [MAC_NAV] = LAYOUT(
-  _______,    _______, _______,    _______,    _______, _______,                        _______,    _______, _______, _______, _______, _______,
-  G(NO_LABK), _______, A(KC_BSPC), A(KC_DEL),  _______, _______,                        _______,    _______, _______, _______, _______, _______,
-  _______,    _______, _______,    _______,    _______, _______,                        G(NO_0),    _______, _______, _______, _______, _______,
-  _______,    _______, A(KC_LEFT), A(KC_RGHT), _______, _______, G(NO_PLUS), G(NO_MINS), _______,   _______, _______, _______, _______, _______,
+  _______,    _______, _______,    _______,    _______, _______,                     _______, _______,    _______,    _______, _______, _______,
+  G(NO_LABK), _______, A(KC_BSPC), A(KC_DEL),  _______, _______,                     _______, _______,    _______,    _______, _______, _______,
+  _______,    _______, _______,    _______,    _______, _______,                     _______, G(NO_PLUS), G(NO_MINS), G(NO_0), _______, _______,
+  _______,    _______, A(KC_LEFT), A(KC_RGHT), _______, _______, _______,   _______, _______, _______,    _______,    _______, _______, _______,
                                       _______, _______, _______,            _______, _______, _______
 )
 };
-
-/* MAC + NAV together activate MAC_NAV. */
-layer_state_t layer_state_set_user(layer_state_t state) {
-    return update_tri_layer_state(state, NAV, MAC, MAC_NAV);
-}

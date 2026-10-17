@@ -137,19 +137,20 @@
         nav_layer {
             display-name = "NAV";
 // ------------------------------------------------------------------------------------------------------------
-// |       |     |     |      |      |      |                   |      |       |       |      |       |       |
-// |  WIN  | INS |C+BSP| C+DEL| PGUP | DEL  |                   | PLAY | VOL-  | VOL+  | MUTE | BRI-  | BRI+  |
-// |       | HOME|  <- |  ->  |  ^   | END  |                   |ZOOM0 |       |       |      |       |       |
-// |       |PRTSC| C+<-| C+-> |  v   | PGDN | ZOOM+  |  | ZOOM- |      |       |       |      |       |       |
+// | PRTSC |     |     |      |      |      |                   |      |       |       |      |       |       |
+// |  WIN  | INS |DELW<|DELW> | HOME | END  |                   | PLAY | VOL+  | VOL-  | MUTE | BRI+  | BRI-  |
+// |       |     |  <- |  ->  |  ^   | PGUP |                   |      | ZOOM+ | ZOOM- | ZOOM0|       |       |
+// |       | DEL |WORD<|WORD> |  v   | PGDN |        |  |       |      |       |       |      |       |       |
 //                     |      |      | HELD |        |  |       |      |       |       |
 // Arrows on the left hand so the right hand can stay on the mouse. Shift/Ctrl on the left pinky column pass through.
+// DELW< / DELW> = delete word left / right (Ctrl+Backspace, Ctrl+Del). WORD< / WORD> = jump a word (Ctrl+arrow).
 // WIN = next window of the same app (Alt+` on Linux/GNOME, Cmd+< on macOS via MAC_NAV)
             bindings = <
-&trans          &trans    &trans       &trans        &trans    &trans                                   &trans        &trans       &trans       &trans     &trans       &trans
-&kp LA(NB_PIPE) &kp INS   &kp LC(BSPC) &kp LC(DEL)   &kp PG_UP &kp DEL                                  &kp C_PP      &kp C_VOL_DN &kp C_VOL_UP &kp C_MUTE &kp C_BRI_DN &kp C_BRI_UP
-&trans          &kp HOME  &kp LEFT     &kp RIGHT     &kp UP    &kp END                                  &kp LC(NB_N0) &trans       &trans       &trans     &trans       &trans
-&trans          &kp PSCRN &kp LC(LEFT) &kp LC(RIGHT) &kp DOWN  &kp PG_DN &kp LC(NB_PLUS) &kp LC(NB_MINUS) &trans      &trans       &trans       &trans     &trans       &trans
-                                       &trans        &trans    &trans    &trans          &trans           &trans      &trans       &trans
+&kp PSCRN       &trans   &trans       &trans        &trans    &trans                       &trans   &trans           &trans            &trans         &trans       &trans
+&kp LA(NB_PIPE) &kp INS  &kp LC(BSPC) &kp LC(DEL)   &kp HOME  &kp END                      &kp C_PP &kp C_VOL_UP     &kp C_VOL_DN      &kp C_MUTE     &kp C_BRI_UP &kp C_BRI_DN
+&trans          &trans   &kp LEFT     &kp RIGHT     &kp UP    &kp PG_UP                    &trans   &kp LC(NB_PLUS)  &kp LC(NB_MINUS)  &kp LC(NB_N0)  &trans       &trans
+&trans          &kp DEL  &kp LC(LEFT) &kp LC(RIGHT) &kp DOWN  &kp PG_DN &trans    &trans   &trans   &trans           &trans            &trans         &trans       &trans
+                                      &trans        &trans    &trans    &trans    &trans   &trans   &trans           &trans
             >;
         };
 
@@ -157,19 +158,19 @@
             display-name = "SYM";
 // ------------------------------------------------------------------------------------------------------------
 // |       |     |     |      |      |      |                   |      |       |       |      |       |       |
-// |       |  ~  |  <  |  >   |  $   |  %   |                   |  `   |   @   |   #   |  !   |   Å   |   €   |
-// |       |  (  |  )  |  {   |  }   |  |   |                   |  "   |   -   |   _   |  =   |   Ø   |   ^   |
-// |       |  [  |  ]  |  \   |  &   |  *   |        |  |       |  +   |       |       |  ?   |   Æ   |       |
+// |       |  ~  |  <  |  >   |  $   |  %   |                   |  `   |   @   |   #   |      |   Æ   |   Ø   |
+// |       |  (  |  )  |  {   |  }   |  |   |                   |  "   |   +   |   -   |  =   |   _   |   Å   |
+// |       |  [  |  ]  |  \   |  &   |  *   |        |  |       |  ^   |       |   !   |  ?   |       |   €   |
 //                     |      |      |      |        |  |       | HELD |       |       |
 // Bracket pairs on resting finger pairs: ( ) on A S, { } on D F, [ ] on Z X.
-// Right home row carries the symbols typed most: - _ = under index, middle, ring; " on the inner reach.
-// Å Ø Æ stacked in one column (P ; /), ? on the . key, the rare € and ^ on the outermost column.
+// Right home row: " + - = _ from the inner reach outward. Æ Ø Å run from P across to the pinky column and down.
+// ! on the , key, ? on the . key. The rare ^ and € sit on the inner and outer bottom-row corners.
             bindings = <
-&trans &trans      &trans      &trans      &trans      &trans                           &trans      &trans       &trans       &trans       &trans         &trans
-&trans &no_tilde   &kp NB_LT   &kp NB_GT   &kp NB_DLLR &kp NB_PRCNT                     &no_grave   &kp NB_AT    &kp NB_HASH  &kp NB_EXCL  &kp NB_A_RING  &kp NB_EURO
-&trans &kp NB_LPAR &kp NB_RPAR &kp NB_LBRC &kp NB_RBRC &kp NB_PIPE                      &kp NB_DQT  &kp NB_MINUS &kp NB_UNDER &kp NB_EQUAL &kp NB_O_SLASH &no_caret
-&trans &kp NB_LBKT &kp NB_RBKT &kp NB_BSLH &kp NB_AMPS &kp NB_ASTRK &trans     &trans   &kp NB_PLUS &trans       &trans       &kp NB_QMARK &kp NB_AE      &trans
-                               &trans      &trans      &trans       &trans     &trans   &trans      &trans       &trans
+&trans &trans      &trans      &trans      &trans      &trans                           &trans      &trans      &trans       &trans       &trans       &trans
+&trans &no_tilde   &kp NB_LT   &kp NB_GT   &kp NB_DLLR &kp NB_PRCNT                     &no_grave   &kp NB_AT   &kp NB_HASH  &trans       &kp NB_AE    &kp NB_O_SLASH
+&trans &kp NB_LPAR &kp NB_RPAR &kp NB_LBRC &kp NB_RBRC &kp NB_PIPE                      &kp NB_DQT  &kp NB_PLUS &kp NB_MINUS &kp NB_EQUAL &kp NB_UNDER &kp NB_A_RING
+&trans &kp NB_LBKT &kp NB_RBKT &kp NB_BSLH &kp NB_AMPS &kp NB_ASTRK &trans     &trans   &no_caret   &trans      &kp NB_EXCL  &kp NB_QMARK &trans       &kp NB_EURO
+                               &trans      &trans      &trans       &trans     &trans   &trans      &trans      &trans
             >;
         };
 
@@ -179,15 +180,17 @@
 // |       | BT1 | BT2 | BT3  | BT4  | BT5  |                   |BTCLR |USB/BT | LED   | LED- | LED+  |  MAC  |
 // |       | F1  | F2  | F3   | F4   | F5   |                   |  /   |   7   |   8   |  9   |   -   | BSPC  |
 // |       | F6  | F7  | F8   | F9   | F10  |                   |  *   |   4   |   5   |  6   |   +   | ENTER |
-// |       | F11 | F12 |      |      |      |        |  |       |  0   |   1   |   2   |  3   |   .   |   =   |
+// |       | F11 | F12 |  ´   |  ¨   |      |        |  |       |  0   |   1   |   2   |  3   |   .   |   =   |
 //                     |      |      |      |        |  |       |      |       |       | HELD |
 // BT1 is the Mac: it also turns the MAC layer on; BT2-5 turn it off. MAC toggles it by hand.
+// Numpad sends plain digits, not keypad codes, so it works regardless of NumLock on Windows/Linux.
+// ´ and ¨ are the Norwegian dead keys for accents: ´ then e = é, ¨ then u = ü.
             bindings = <
-&trans &bt0    &bt1    &bt2   &bt3   &bt4                         &bt BT_CLR      &out OUT_TOG &rgb_ug RGB_TOG &rgb_ug RGB_BRD &rgb_ug RGB_BRI &tog MAC
-&trans &kp F1  &kp F2  &kp F3 &kp F4 &kp F5                       &kp KP_SLASH    &kp KP_N7    &kp KP_N8       &kp KP_N9       &kp KP_MINUS    &kp BSPC
-&trans &kp F6  &kp F7  &kp F8 &kp F9 &kp F10                      &kp KP_MULTIPLY &kp KP_N4    &kp KP_N5       &kp KP_N6       &kp KP_PLUS     &kp RET
-&trans &kp F11 &kp F12 &trans &trans &trans  &trans      &trans   &kp KP_N0       &kp KP_N1    &kp KP_N2       &kp KP_N3       &kp NB_DOT      &kp NB_EQUAL
-                       &trans &trans &trans  &trans      &trans   &trans          &trans       &trans
+&trans &bt0    &bt1    &bt2         &bt3          &bt4                         &bt BT_CLR   &out OUT_TOG &rgb_ug RGB_TOG &rgb_ug RGB_BRD &rgb_ug RGB_BRI &tog MAC
+&trans &kp F1  &kp F2  &kp F3       &kp F4        &kp F5                       &kp NB_FSLH  &kp NB_N7    &kp NB_N8       &kp NB_N9       &kp NB_MINUS    &kp BSPC
+&trans &kp F6  &kp F7  &kp F8       &kp F9        &kp F10                      &kp NB_ASTRK &kp NB_N4    &kp NB_N5       &kp NB_N6       &kp NB_PLUS     &kp RET
+&trans &kp F11 &kp F12 &kp NB_ACUTE &kp NB_UMLAUT &trans  &trans      &trans   &kp NB_N0    &kp NB_N1    &kp NB_N2       &kp NB_N3       &kp NB_DOT      &kp NB_EQUAL
+                       &trans       &trans        &trans  &trans      &trans   &trans       &trans       &trans
             >;
         };
 
@@ -214,11 +217,11 @@
             display-name = "MACNAV";
             /* NAV while MAC is on: Cmd/Opt versions of the OS-specific NAV keys, same positions as NAV. */
             bindings = <
-&trans        &trans &trans       &trans        &trans &trans                                        &trans        &trans &trans &trans &trans &trans
-&kp LG(NB_LT) &trans &kp LA(BSPC) &kp LA(DEL)   &trans &trans                                        &trans        &trans &trans &trans &trans &trans
-&trans        &trans &trans       &trans        &trans &trans                                        &kp LG(NB_N0) &trans &trans &trans &trans &trans
-&trans        &trans &kp LA(LEFT) &kp LA(RIGHT) &trans &trans &kp LG(NB_PLUS) &kp LG(NB_MINUS)       &trans        &trans &trans &trans &trans &trans
-                                  &trans        &trans &trans &trans          &trans                 &trans        &trans &trans
+&trans        &trans &trans       &trans        &trans &trans                       &trans &trans          &trans           &trans        &trans &trans
+&kp LG(NB_LT) &trans &kp LA(BSPC) &kp LA(DEL)   &trans &trans                       &trans &trans          &trans           &trans        &trans &trans
+&trans        &trans &trans       &trans        &trans &trans                       &trans &kp LG(NB_PLUS) &kp LG(NB_MINUS) &kp LG(NB_N0) &trans &trans
+&trans        &trans &kp LA(LEFT) &kp LA(RIGHT) &trans &trans &trans      &trans    &trans &trans          &trans           &trans        &trans &trans
+                                  &trans        &trans &trans &trans      &trans    &trans &trans          &trans
             >;
         };
     };
