@@ -98,18 +98,18 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 /* SYM (hold right thumb)
  * ,-----------------------------------------.                ,-----------------------------------------.
  * |      |      |      |      |      |      |                |      |      |      |      |      |      |
- * |      |  <   |  >   |  ~   |  $   |  %   |                |  `   |  !   |  ?   |      |  Å   |  €   |
- * |      |  (   |  )   |  {   |  }   |  |   |                |  "   |  +   |  -   |  =   |  Ø   |  ^   |
- * |      |  [   |  ]   |  \   |  &   |  *   |      |  |      |      |  @   |  _   |  #   |  Æ   |      |
+ * |      |  <   |  >   |  ~   |  $   |  %   |                |  `   |  !   |  ?   |  €   |  Å   |      |
+ * |      |  (   |  )   |  {   |  }   |  |   |                |  "   |  +   |  -   |  =   |  Ø   |      |
+ * |      |  [   |  ]   |  \   |  &   |  *   |      |  |      |  ^   |  @   |  _   |  #   |  Æ   |      |
  * `--------------------------'      |      |      |  |      | HELD |      '--------------------------'
  * Bracket pairs on resting finger pairs: < > above ( ) on Q W / A S, { } on D F, [ ] on Z X.
  * Right home row: " + - = from the inner reach outward, _ under the -. Å Ø Æ in one column under 0.
  */
 [SYM] = LAYOUT(
-  _______, _______, _______, _______,   _______, _______,                     _______,  _______, _______, _______, _______, _______,
-  _______, NO_LABK, NO_RABK, NO_TILD_S, NO_DLR,  NO_PERC,                     NO_GRV_S, NO_EXLM, NO_QUES, _______, NO_ARNG, NO_EURO,
-  _______, NO_LPRN, NO_RPRN, NO_LCBR,   NO_RCBR, NO_PIPE,                     NO_DQUO,  NO_PLUS, NO_MINS, NO_EQL,  NO_OSTR, NO_CIRC_S,
-  _______, NO_LBRC, NO_RBRC, NO_BSLS,   NO_AMPR, NO_ASTR, _______,   _______, _______,  NO_AT,   NO_UNDS, NO_HASH, NO_AE,   _______,
+  _______, _______, _______, _______,   _______, _______,                     _______,   _______, _______, _______, _______, _______,
+  _______, NO_LABK, NO_RABK, NO_TILD_S, NO_DLR,  NO_PERC,                     NO_GRV_S,  NO_EXLM, NO_QUES, NO_EURO, NO_ARNG, _______,
+  _______, NO_LPRN, NO_RPRN, NO_LCBR,   NO_RCBR, NO_PIPE,                     NO_DQUO,   NO_PLUS, NO_MINS, NO_EQL,  NO_OSTR, _______,
+  _______, NO_LBRC, NO_RBRC, NO_BSLS,   NO_AMPR, NO_ASTR, _______,   _______, NO_CIRC_S, NO_AT,   NO_UNDS, NO_HASH, NO_AE,   _______,
                                    _______, _______, _______,            _______, _______, _______
 ),
 

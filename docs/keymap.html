@@ -141,9 +141,9 @@ th{font-weight:600;font-size:.78rem;letter-spacing:.04em;text-transform:uppercas
     <h3>Where the shell characters live</h3>
     <ul>
       <li><code>/</code> <code>.</code> <code>,</code> <code>;</code> <code>'</code> on BASE; Shift gives <code>_</code> <code>:</code> <code>*</code> for free on the Norwegian layout. The Lily58 also has <code>=</code> and <code>-</code> on its inner keys.</li>
-      <li>SYM right home row, the best spots: <code>"</code> on H, <code>+</code> on J, <code>-</code> on K, <code>=</code> on L, <code>_</code> under the dash on <code>,</code>. Å Ø Æ in one column under 0 (P, <code>;</code>, <code>/</code>). <code>! ?</code> on U I, <code>@ #</code> on M and <code>.</code>.</li>
+      <li>SYM right home row, the best spots: <code>"</code> on H, <code>+</code> on J, <code>-</code> on K, <code>=</code> on L, <code>_</code> under the dash on <code>,</code>. Å Ø Æ in one column under 0 (P, <code>;</code>, <code>/</code>). <code>! ? €</code> on U I O, <code>^ @ #</code> on N M and <code>.</code>.</li>
       <li>SYM left hand: bracket pairs on resting finger pairs: <code>&lt; &gt;</code> on Q W above <code>( )</code> on A S, <code>{ }</code> on D F, <code>[ ]</code> on Z X. <code>~</code> on E, <code>|</code> on G, <code>\</code> on C, <code>&amp; *</code> on V B, <code>$ %</code> on R T.</li>
-      <li>The rare <code>€</code> and <code>^</code> sit on the outer right column; <code>`</code> on Y. Every printable ASCII symbol has a spot, and the Norwegian dead keys <code>´ ¨</code> live on FN for accents.</li>
+      <li><code>`</code> on Y. Every printable ASCII symbol has a spot, and the Norwegian dead keys <code>´ ¨</code> live on FN for accents.</li>
     </ul>
   </div>
   <div class="card">
@@ -223,9 +223,9 @@ const symMain={
   [_,['[',S],[']',S],['\\',S],['&',S],['*',S]] ],
  right:[
   [_,_,_,_,_,_],
-  [['`',S],['!',S],['?',S],_,['Å',A],['€',S]],
-  [['"',S],['+',S],['-',S],['=',S],['Ø',A],['^',S]],
-  [_,['@',S],['_',S],['#',S],['Æ',A],_] ]
+  [['`',S],['!',S],['?',S],['€',S],['Å',A],_],
+  [['"',S],['+',S],['-',S],['=',S],['Ø',A],_],
+  [['^',S],['@',S],['_',S],['#',S],['Æ',A],_] ]
 };
 const fnLeftRows=[
   [_,['F1',F],['F2',F],['F3',F],['F4',F],['F5',F]],
@@ -278,7 +278,7 @@ const layers=[
  {name:'SYM',hint:'Hold the right thumb. Bracket pairs on resting finger pairs on the left; the right home row carries the symbols typed most.',
   notes:{all:[['Bracket pairs','< > on Q W directly above ( ) on A S, { } on D F, [ ] on Z X: pinky + ring and middle + index, where the fingers already rest. ~ right of < >, | on G, \\ on C, & * on V B, $ % on the top row.'],
               ['Right home row','" on H, + on J, - on K, = on L, with _ directly under the - on the , key.'],
-              ['Å Ø Æ','One column under 0: Å on P, Ø on ;, Æ on /. ! ? on U I, @ # on M and the . key, ` on Y. The rare € and ^ on the outer column.'],
+              ['Å Ø Æ','One column under 0: Å on P, Ø on ;, Æ on /. ! ? € on U I O, ^ @ # on N M and the . key, ` on Y. The outer right column is free.'],
               ['Digits','Number row falls through, so SYM + 7 still types 7. Useful for $1, ${2}, [0].']]}},
  {name:'FN',hint:'Hold the right outer thumb. Numpad under the right hand, F-keys under the left.',
   notes:{lily58:[['Hosts','FN + 1..5 is one macro each: select the Bluetooth profile and set the underglow to that profile\'s colour (red, green, blue, yellow, purple). BT CLR forgets the current profile, USB/BT switches output when cabled.'],
