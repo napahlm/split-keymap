@@ -80,18 +80,18 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 /* NAV (hold left thumb) - arrows on the left hand so the right hand stays on the mouse
  * ,-----------------------------------------.                ,-----------------------------------------.
- * |PRTSC |      |      |      |      |      |                |      |      |      |      |      |      |
- * | WIN  | INS  |DELW< |DELW> | HOME | END  |                | PLAY | VOL+ | VOL- | MUTE | BRI+ | BRI- |
+ * |      | BSPC |DELW< |DELW> | DEL  |      |                |      |      |      |      |      |      |
+ * | WIN  | INS  | HOME | END  |      |PRTSC |                | PLAY | VOL+ | VOL- | MUTE | BRI+ | BRI- |
  * |      |      |  <-  |  ->  |  ^   | PGUP |                |      |ZOOM+ |ZOOM- |ZOOM0 |      |      |
- * |      | DEL  |WORD< |WORD> |  v   | PGDN |      |  |      |      |      |      |      |      |      |
+ * |      |      |WORD< |WORD> |  v   | PGDN |      |  |      |      |      |      |      |      |      |
  * `--------------------------'      | HELD |      |  |      |      |      '--------------------------'
  * DELW< / DELW> = delete word left / right. WORD< / WORD> = jump a word. WIN = next window of the same app (Alt+`).
  */
 [NAV] = LAYOUT(
-  KC_PSCR,    _______, _______,    _______,    _______, _______,                     _______, _______,    _______,    _______, _______, _______,
-  A(NO_PIPE), KC_INS,  C(KC_BSPC), C(KC_DEL),  KC_HOME, KC_END,                      KC_MPLY, KC_VOLU,    KC_VOLD,    KC_MUTE, KC_BRIU, KC_BRID,
+  _______,    KC_BSPC, C(KC_BSPC), C(KC_DEL),  KC_DEL,  _______,                     _______, _______,    _______,    _______, _______, _______,
+  A(NO_PIPE), KC_INS,  KC_HOME,    KC_END,     _______, KC_PSCR,                     KC_MPLY, KC_VOLU,    KC_VOLD,    KC_MUTE, KC_BRIU, KC_BRID,
   _______,    _______, KC_LEFT,    KC_RGHT,    KC_UP,   KC_PGUP,                     _______, C(NO_PLUS), C(NO_MINS), C(NO_0), _______, _______,
-  _______,    KC_DEL,  C(KC_LEFT), C(KC_RGHT), KC_DOWN, KC_PGDN, _______,   _______, _______, _______,    _______,    _______, _______, _______,
+  _______,    _______, C(KC_LEFT), C(KC_RGHT), KC_DOWN, KC_PGDN, _______,   _______, _______, _______,    _______,    _______, _______, _______,
                                       _______, _______, _______,            _______, _______, _______
 ),
 
@@ -144,8 +144,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 /* MAC_NAV (automatic while MAC and NAV are both on) - Cmd/Opt versions of the OS-specific NAV keys */
 [MAC_NAV] = LAYOUT(
-  _______,    _______, _______,    _______,    _______, _______,                     _______, _______,    _______,    _______, _______, _______,
-  G(NO_LABK), _______, A(KC_BSPC), A(KC_DEL),  _______, _______,                     _______, _______,    _______,    _______, _______, _______,
+  _______,    _______, A(KC_BSPC), A(KC_DEL),  _______, _______,                     _______, _______,    _______,    _______, _______, _______,
+  G(NO_LABK), _______, _______,    _______,    _______, _______,                     _______, _______,    _______,    _______, _______, _______,
   _______,    _______, _______,    _______,    _______, _______,                     _______, G(NO_PLUS), G(NO_MINS), G(NO_0), _______, _______,
   _______,    _______, A(KC_LEFT), A(KC_RGHT), _______, _______, _______,   _______, _______, _______,    _______,    _______, _______, _______,
                                       _______, _______, _______,            _______, _______, _______

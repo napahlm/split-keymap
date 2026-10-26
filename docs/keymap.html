@@ -148,7 +148,7 @@ th{font-weight:600;font-size:.78rem;letter-spacing:.04em;text-transform:uppercas
   </div>
   <div class="card">
     <h3>Arrows on the left hand</h3>
-    <p>NAV is held by the left thumb and the same hand steers: <code>S</code> left, <code>D</code> right, <code>F</code> up, <code>V</code> down, so the right hand can stay on the mouse. PgUp and PgDn on G and B right of the arrows, Home and End on R and T above them, word-jump under left/right on X and C, word-delete on W and E, Del on Z. Shift and Ctrl on the left pinky column pass through, so select-word and jump-word need no extra layer. On macOS the word keys need the MAC layer (Option combos); on the Lily58 that follows the Bluetooth profile, on the Iris it is FN + MAC once and remembered.</p>
+    <p>NAV is held by the left thumb and the same hand steers: <code>S</code> left, <code>D</code> right, <code>F</code> up, <code>V</code> down, so the right hand can stay on the mouse. PgUp and PgDn on G and B right of the arrows, Home and End on W and E directly above left/right, word-jump under left/right on X and C, and the number row holds Backspace, delete-word left/right and Del on 1 to 4. Shift and Ctrl on the left pinky column pass through, so select-word and jump-word need no extra layer. On macOS the word keys need the MAC layer (Option combos); on the Lily58 that follows the Bluetooth profile, on the Iris it is FN + MAC once and remembered.</p>
   </div>
   <div class="card">
     <h3>Thumb rows</h3>
@@ -204,10 +204,10 @@ const baseMain={
 };
 const navMain={
  left:[
-  [['PRTSC',N],_,_,_,_,_],
-  [['WIN',N,'','same app'],['INS',N],['DEL W',N,'←','word'],['DEL W',N,'→','word'],['HOME',N],['END',N]],
+  [_,['BSPC',N],['DEL W',N,'←','word'],['DEL W',N,'→','word'],['DEL',N],_],
+  [['WIN',N,'','same app'],['INS',N],['HOME',N],['END',N],_,['PRTSC',N]],
   [_,_,['←',N],['→',N],['↑',N],['PGUP',N]],
-  [_,['DEL',N],['WORD',N,'←','jump'],['WORD',N,'→','jump'],['↓',N],['PGDN',N]] ],
+  [_,_,['WORD',N,'←','jump'],['WORD',N,'→','jump'],['↓',N],['PGDN',N]] ],
  right:[
   [_,_,_,_,_,_],
   [['PLAY',MD],['VOL+',MD],['VOL−',MD],['MUTE',MD],['BRI+',MD],['BRI−',MD]],
@@ -271,8 +271,8 @@ const layers=[
                ['Pinky columns','Left: Esc, Tab, Shift, Ctrl. Right: Backspace, Delete, Shift, apostrophe: Shift sits on the home row, not in the corner.'],
                ['Inner keys','Alt on the left inner key, where it was on the old Iris map. - on the right inner key as a bonus; it is also on SYM + J.']]}},
  {name:'NAV',hint:'Hold the left thumb. Same hand steers: S D F V are left, right, up, down; the right hand stays on the mouse.',
-  notes:{all:[['Arrows','S ← , D → , F ↑ , V ↓ under the left thumb hold. PgUp right of the up arrow on G, PgDn under it on B. Home above the up arrow on R, End right of it on T.'],
-              ['Words and deletes','WORD ← / → on X and C jump a word (Ctrl+arrow). DEL W ← / → on W and E delete the word left / right of the cursor (Ctrl+Backspace, Ctrl+Del). Plain Del on Z, Insert on Q, PrtSc on Esc.'],
+  notes:{all:[['Arrows','S ← , D → , F ↑ , V ↓ under the left thumb hold. PgUp right of the up arrow on G, PgDn under it on B. Home and End directly above the left and right arrows on W and E.'],
+              ['Words and deletes','WORD ← / → on X and C jump a word (Ctrl+arrow). The number row is the delete row: Backspace on 1, DEL W ← / → on 2 and 3 (Ctrl+Backspace, Ctrl+Del), Del on 4. Insert on Q, PrtSc on T.'],
               ['Modifiers','Shift and Ctrl on the left pinky column pass through: Shift + NAV + S selects left, Ctrl + NAV + D jumps a word.'],
               ['Right hand','Media on the top letter row: play, vol+, vol−, mute, bri+, bri−. Zoom in / out / reset on J K L. WIN on the Tab key cycles windows of the same app (Alt+` on Linux, Cmd+< on the Mac). The OS-specific ones switch to Cmd/Opt automatically while MAC is on.']]}},
  {name:'SYM',hint:'Hold the right thumb. Bracket pairs on resting finger pairs on the left; the right home row carries the symbols typed most.',
