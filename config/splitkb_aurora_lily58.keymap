@@ -158,18 +158,18 @@
             display-name = "SYM";
 // ------------------------------------------------------------------------------------------------------------
 // |       |     |     |      |      |      |                   |      |       |       |      |       |       |
-// |       |  <  |  >  |  ~   |  $   |  %   |                   |  `   |   !   |   ?   |  €   |   Å   |       |
-// |       |  (  |  )  |  {   |  }   |  |   |                   |  "   |   +   |   -   |  =   |   Ø   |       |
-// |       |  [  |  ]  |  \   |  &   |  *   |        |  |       |  ^   |   @   |   _   |  #   |   Æ   |       |
+// |       |  <  |  >  |  ~   |  $   |  %   |                   |  "   |   !   |   ?   |  ^   |   Å   |       |
+// |       |  (  |  )  |  {   |  }   |  |   |                   |  `   |   +   |   =   |  -   |   Ø   |       |
+// |       |  [  |  ]  |  \   |  &   |  *   |        |  |       |  €   |   @   |   #   |  _   |   Æ   |       |
 //                     |      |      |      |        |  |       | HELD |       |       |
 // Bracket pairs on resting finger pairs: < > above ( ) on Q W / A S, { } on D F, [ ] on Z X.
-// Right home row: " + - = from the inner reach outward, _ under the -. ! ? € on U I O, ^ @ # on N M and the . key.
+// Right home row: ` + = - from the inner reach outward, _ under the -. " ! ? ^ on Y U I O, € @ # on N M and the , key.
 // Å Ø Æ in one column under 0 (P ; /). Outer right column free.
             bindings = <
 &trans &trans      &trans      &trans      &trans      &trans                           &trans     &trans      &trans       &trans       &trans         &trans
-&trans &kp NB_LT   &kp NB_GT   &no_tilde   &kp NB_DLLR &kp NB_PRCNT                     &no_grave  &kp NB_EXCL &kp NB_QMARK &kp NB_EURO  &kp NB_A_RING  &trans
-&trans &kp NB_LPAR &kp NB_RPAR &kp NB_LBRC &kp NB_RBRC &kp NB_PIPE                      &kp NB_DQT &kp NB_PLUS &kp NB_MINUS &kp NB_EQUAL &kp NB_O_SLASH &trans
-&trans &kp NB_LBKT &kp NB_RBKT &kp NB_BSLH &kp NB_AMPS &kp NB_ASTRK &trans     &trans   &no_caret  &kp NB_AT   &kp NB_UNDER &kp NB_HASH  &kp NB_AE      &trans
+&trans &kp NB_LT   &kp NB_GT   &no_tilde   &kp NB_DLLR &kp NB_PRCNT                     &kp NB_DQT  &kp NB_EXCL &kp NB_QMARK &no_caret    &kp NB_A_RING  &trans
+&trans &kp NB_LPAR &kp NB_RPAR &kp NB_LBRC &kp NB_RBRC &kp NB_PIPE                      &no_grave   &kp NB_PLUS &kp NB_EQUAL &kp NB_MINUS &kp NB_O_SLASH &trans
+&trans &kp NB_LBKT &kp NB_RBKT &kp NB_BSLH &kp NB_AMPS &kp NB_ASTRK &trans     &trans   &kp NB_EURO &kp NB_AT   &kp NB_HASH  &kp NB_UNDER &kp NB_AE      &trans
                                &trans      &trans      &trans       &trans     &trans   &trans     &trans      &trans
             >;
         };
